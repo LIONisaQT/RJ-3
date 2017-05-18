@@ -1,6 +1,6 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 100, 320, key);
+	Phaser.Sprite.call(this, game, 1800, 320, key);
 
 	game.add.existing(this);
 
