@@ -55,17 +55,12 @@ var playState= {
 		game.camera.follow(player, null, 0.1, 0.1);
 
 		enemy = new Enemy(game, 2000, 360, 'enemy');
-		leak = new Leak(game, 2200, 300, 'leak');
 
 	},
-	leakFix: function(leak, player) {
-		leak.kill();
-		this.totalLeaks-=1;
-	},
+
 	update: function() {
 		game.physics.arcade.collide(player, mapLayer);
 		game.physics.arcade.collide(player, enemy, knockback, null, this);
-		game.physics.arcade.collide(leak, player, this.leakFix, null, this);
 		game.physics.arcade.collide(player, pipes);
 		// game.physics.arcade.collide(player, steams, knockback, null, this);
 
