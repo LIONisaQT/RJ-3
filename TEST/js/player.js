@@ -1,6 +1,6 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 1800, 320, key);
+	Phaser.Sprite.call(this, game, 140, 320, key);
 
 	game.add.existing(this);
 
@@ -11,27 +11,34 @@ function Player(game, key) {
     // this.velocityFriction = 100;
 	this.body.collideWorldBounds = true;
 	this.lastKeyPressed;
-	this.hp = 3;
+	this.maxHealth = 3;
+	this.health = this.maxHealth;
 	this.gotHit = false;
 	this.isStunned = false;
 	this.knockbackTimer = 60;
 	this.knockbackDistance = 0.5;
+
+	var barConfig = {x: 200, y: 20};
+	this.myHealthBar = new HealthBar(this.game, barConfig);
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-    console.log(this.hp);
-	this.body.velocity.x = 0;
+    // console.log(this.hp);
+	// this.body.velocity.x = 0;
 	this.body.velocity.y = 0;
+	// player.velocityNormal = 200;
 
 	if (this.gotHit) {
-		console.log(this.hp);
+		// console.log(this.hp);
 		stunned();
 		damaged();
 		this.gotHit = false;
-
+		this.health -= 1;
+		console.log(this.health / this.maxHealth * 100);
+		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 	}
 
 	if (this.isStunned == false) {
