@@ -9,8 +9,7 @@ var playState= {
 
 		// add map
 		map = game.add.tilemap('level');
-		// map.addTilesetImage('wall', 'tilesheet');
-		map.addTilesetImage('lvl1', 'tiles')
+		map.addTilesetImage('wall', 'tilesheet');
 		mapLayer = map.createLayer('Tile Layer 1');
 		map.setCollisionByExclusion([]);
 		mapLayer.resizeWorld();
@@ -104,7 +103,7 @@ var playState= {
 		game.debug.spriteBounds(steams);
 
 		// states change
-		if (player.health == 0) || this.waterLevel <= 0) {
+		if (player.health == 0 || this.waterLevel <= 0) {
 			console.log("you lose");
 			game.state.start('gameOver');
 		}
