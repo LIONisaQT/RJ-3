@@ -91,7 +91,7 @@ var playState= {
 		// player attack collisions
 		if (game.physics.arcade.overlap(enemy, player.hitboxes, null, null, this)) {
 			console.log("hit");
-			enemy.kill();
+			// enemy.kill();
 		}
 		game.physics.arcade.collide(player.hitboxes, leaks, this.leakFix, null, this);
 
@@ -103,7 +103,7 @@ var playState= {
 		game.debug.spriteBounds(steams);
 
 		// states change
-		if (player.health == 0 || this.waterLevel <= 0) {
+		if (player.health == 0) || this.waterLevel <= 0) {
 			console.log("you lose");
 			game.state.start('gameOver');
 		}

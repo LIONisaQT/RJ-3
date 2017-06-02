@@ -1,7 +1,6 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
 	Phaser.Sprite.call(this, game, 140, 320, key);
-
 	game.add.existing(this);
 
 	// add properties
@@ -29,6 +28,7 @@ function Player(game, key) {
 	this.hitboxes.enableBody = true;
 	// make hitboxes children of the player so they will move with the player
 	this.addChild(this.hitboxes);
+
 	// create a hitbox (empty sprite)
 	this.basicAtk = this.hitboxes.create(this.body.x, this.body.y, null);
 	// set size of hitbox and positiong relative to player
@@ -38,14 +38,21 @@ function Player(game, key) {
 	this.basicAtk.damage = 1;
 	this.basicAtk.knockbackDirection = 0.5;
 	this.basicAtk.knockbackAmt = 600;
+
+	// this.vacuum = this.hitboxes.create(this.body.x, this.body.y, null);
+	// this.vacuum.body.setSize(100, 60, this.width, -20);
+	// this.vacuum.name = "vacuum";
+	// this.basicAtk.damage = 1;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+	disableAllHitboxes();
 	this.body.velocity.y = 0;
 	game.debug.body(this.basicAtk);
+	// game.debug.body(this.vacuum);
 
 	// player gets hit by damaging element
 	if (this.gotHit) {
@@ -63,6 +70,9 @@ Player.prototype.update = function() {
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 			enableHitbox("basicAtk");
 		}
+		// if (game.input.keyboard.justPressed(Phaser.Keyboard.Z)) {
+		// 	enableHitbox("vacuum");
+		// }
 		if (cursors.up.isDown) {
 	    	this.body.velocity.y = -this.velocityNormal;      // up
 			this.lastKeyPressed = 'up';
@@ -70,7 +80,6 @@ Player.prototype.update = function() {
 	    	this.body.velocity.y = this.velocityNormal;       // down
 			this.lastKeyPressed = 'down';
 		}
-
 		if (cursors.left.isDown) {
 	    	this.body.velocity.x = -this.velocityNormal;      // left
 			this.lastKeyPressed = 'left';
@@ -83,14 +92,17 @@ Player.prototype.update = function() {
 
 function enableHitbox(hitboxName) {
 	for (var i = 0; i < player.hitboxes.children.length; i++) {
-		if (player.hitboxes.children[i].name == hitboxName) {
+		if (player.hitboxes.children[i].name === hitboxName) {
 			player.hitboxes.children[i].reset(player.body.x, player.body.y);
 		}
 	}
+
+	// will call disableAllHitboxes after a delay (letting the animation complete)
+	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllHitboxes, this);
 }
 
 function disableAllHitboxes() {
-	hitboxes.forEachExists(function(hitbox) {hitbox.kill();});
+	player.hitboxes.forEachExists(function(hitbox) {hitbox.kill();});
 }
 
 function stunned() {
@@ -102,7 +114,6 @@ function stunned() {
 function notStunned() {
 	console.log("un-stunned!");
 	player.isStunned = false;
-
 }
 
 function damaged() {
