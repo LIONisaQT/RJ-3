@@ -9,7 +9,8 @@ var playState= {
 
 		// add map
 		map = game.add.tilemap('level');
-		map.addTilesetImage('wall', 'tilesheet');
+		// map.addTilesetImage('wall', 'tilesheet');
+		map.addTilesetImage('lvl1', 'tiles')
 		mapLayer = map.createLayer('Tile Layer 1');
 		map.setCollisionByExclusion([]);
 		mapLayer.resizeWorld();
