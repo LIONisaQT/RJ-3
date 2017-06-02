@@ -32,7 +32,7 @@ function Player(game, key) {
 	// create a hitbox (empty sprite)
 	this.hitbox1 = this.hitboxes.create(this.body.x, this.body.y, null);
 	// set size of hitbox and positiong relative to player
-	this.hitbox1.body.setSize(50, 50, this.width, this.height);
+	this.hitbox1.body.setSize(50, 40, this.width, 0);
 	// properties of the hitbox
 	this.hitbox1.name = "whack";
 	this.hitbox1.damage = 1;
