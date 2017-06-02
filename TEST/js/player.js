@@ -30,14 +30,14 @@ function Player(game, key) {
 	// make hitboxes children of the player so they will move with the player
 	this.addChild(this.hitboxes);
 	// create a hitbox (empty sprite)
-	this.hitbox1 = this.hitboxes.create(this.body.x, this.body.y, null);
+	this.basicAtk = this.hitboxes.create(this.body.x, this.body.y, null);
 	// set size of hitbox and positiong relative to player
-	this.hitbox1.body.setSize(50, 40, this.width, 0);
+	this.basicAtk.body.setSize(50, 40, this.width, 0);
 	// properties of the hitbox
-	this.hitbox1.name = "whack";
-	this.hitbox1.damage = 1;
-	this.hitbox1.knockbackDirection = 0.5;
-	this.hitbox1.knockbackAmt = 600;
+	this.basicAtk.name = "basicAtk";
+	this.basicAtk.damage = 1;
+	this.basicAtk.knockbackDirection = 0.5;
+	this.basicAtk.knockbackAmt = 600;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -45,7 +45,7 @@ Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
 	this.body.velocity.y = 0;
-	game.debug.body(this.hitbox1);
+	game.debug.body(this.basicAtk);
 
 	// player gets hit by damaging element
 	if (this.gotHit) {
@@ -61,7 +61,7 @@ Player.prototype.update = function() {
 	// player mechanics enabled when not stunned
 	if (this.isStunned == false) {
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
-			enableHitbox("whack");
+			enableHitbox("basicAtk");
 		}
 		if (cursors.up.isDown) {
 	    	this.body.velocity.y = -this.velocityNormal;      // up
