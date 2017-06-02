@@ -11,7 +11,7 @@ function Steam(game, key, x, y) {
 
 	// add properties
 	this.anchor.set(0.5, 0.5);
-	game.physics.enable(this);
+	game.physics.enable(this, Phaser.Physics.ARCADE, true);
 	this.body.immovable = true;
 	this.body.enable = true;
 	//this.body.moves = false;

@@ -1,6 +1,3 @@
-//Jeffrey Hui
-//jechui,1395834
-//Endless Runner
 var gameOver= {
 	create: function(){
 		//  Texts on the Menu Screen

@@ -1,7 +1,3 @@
-//Jeffrey Hui
-//jechui,1395834
-//Endless Runner
-
 var game;
 var map;
 var layer;

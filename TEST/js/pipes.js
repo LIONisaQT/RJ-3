@@ -10,8 +10,6 @@ function Pipes(game, key, distX, distY) {
 		game.physics.enable(this);
 		this.body.immovable = true;
 		this.body.enable = true;
-
-
 }
 
 Pipes.prototype = Object.create(Phaser.Sprite.prototype);
@@ -19,5 +17,4 @@ Pipes.prototype.constructor = Pipes;
 
 Pipes.prototype.update = function() {
 	// game.physics.arcade.collide(this, player);
-
 }

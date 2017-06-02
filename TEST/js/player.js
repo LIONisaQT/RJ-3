@@ -1,40 +1,68 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 1800, 320, key);
+	Phaser.Sprite.call(this, game, 140, 320, key);
 
 	game.add.existing(this);
 
 	// add properties
 	this.anchor.set(0.5, 0.5);
 	game.physics.enable(this);
-    this.velocityNormal = 200;
+	this.defaultVelocity = 500;
+    this.velocityNormal = this.defaultVelocity;
     // this.velocityFriction = 100;
 	this.body.collideWorldBounds = true;
 	this.lastKeyPressed;
-	this.hp = 3;
+	this.maxHealth = 3;
+	this.health = this.maxHealth;
 	this.gotHit = false;
 	this.isStunned = false;
 	this.knockbackTimer = 60;
 	this.knockbackDistance = 0.5;
+
+	// health bar
+	var barConfig = {x: 200, y: 20};
+	this.myHealthBar = new HealthBar(this.game, barConfig);
+
+	// create group for player's hitboxes
+	this.hitboxes = game.add.group();
+	// give all hitboxes physics body
+	this.hitboxes.enableBody = true;
+	// make hitboxes children of the player so they will move with the player
+	this.addChild(this.hitboxes);
+	// create a hitbox (empty sprite)
+	this.hitbox1 = this.hitboxes.create(this.body.x, this.body.y, null);
+	// set size of hitbox and positiong relative to player
+	this.hitbox1.body.setSize(50, 50, this.width, this.height);
+	// properties of the hitbox
+	this.hitbox1.name = "whack";
+	this.hitbox1.damage = 1;
+	this.hitbox1.knockbackDirection = 0.5;
+	this.hitbox1.knockbackAmt = 600;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-    console.log(this.hp);
-	this.body.velocity.x = 0;
 	this.body.velocity.y = 0;
+	game.debug.body(this.hitbox1);
 
+	// player gets hit by damaging element
 	if (this.gotHit) {
-		console.log(this.hp);
+		// console.log(this.hp);
 		stunned();
 		damaged();
 		this.gotHit = false;
-
+		this.health -= 1;
+		console.log(this.health / this.maxHealth * 100);
+		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 	}
 
+	// player mechanics enabled when not stunned
 	if (this.isStunned == false) {
+		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
+			enableHitbox("whack");
+		}
 		if (cursors.up.isDown) {
 	    	this.body.velocity.y = -this.velocityNormal;      // up
 			this.lastKeyPressed = 'up';
@@ -51,38 +79,18 @@ Player.prototype.update = function() {
 			this.lastKeyPressed = 'right';
 		}
 	}
+}
 
-	if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
-        if (this.lastKeyPressed == 'right') {
-			if (this.body.position.x + this.width * 2 >= enemy.body.position.x
-				&& this.body.position.y >= enemy.body.position.y - 20
-				&& this.body.position.y <= enemy.body.position.y + 20) {
-				console.log('get rekt');
-				enemy.kill();
-			}
-		} else if (this.lastKeyPressed == 'left') {
-			if (this.body.position.x - this.width * 2 <= enemy.body.position.x
-				&& this.body.position.y >= enemy.body.position.y - 20
-				&& this.body.position.y <= enemy.body.position.y + 20) {
-				console.log('get rekt');
-				enemy.kill();
-			}
-		} else if (this.lastKeyPressed == 'up') {
-			if (this.body.position.y - this.width * 2 <= enemy.body.position.y
-				&& this.body.position.x >= enemy.body.position.x - 20
-				&& this.body.position.x <= enemy.body.position.x + 20) {
-				console.log('get rekt');
-				enemy.kill();
-			}
-		} else if (this.lastKeyPressed == 'down') {
-			if (this.body.position.x + this.width * 2 >= enemy.body.position.y
-				&& this.body.position.x >= enemy.body.position.x - 20
-				&& this.body.position.x <= enemy.body.position.x + 20) {
-				console.log('good d given');
-				enemy.kill();
-			}
+function enableHitbox(hitboxName) {
+	for (var i = 0; i < player.hitboxes.children.length; i++) {
+		if (player.hitboxes.children[i].name == hitboxName) {
+			player.hitboxes.children[i].reset(player.body.x, player.body.y);
 		}
-    }
+	}
+}
+
+function disableAllHitboxes() {
+	hitboxes.forEachExists(function(hitbox) {hitbox.kill();});
 }
 
 function stunned() {
@@ -92,12 +100,12 @@ function stunned() {
 }
 
 function notStunned() {
-	console.log("hi");
+	console.log("un-stunned!");
 	player.isStunned = false;
 
 }
 
-function damaged(){
+function damaged() {
 	player.hp -= 1;
 }
 
