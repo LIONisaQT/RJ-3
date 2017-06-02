@@ -10,8 +10,6 @@ function Ooze(game, key, distX, distY) {
 		game.physics.enable(this);
 		this.body.immovable = true;
 		this.body.enable = true;
-
-
 }
 
 Ooze.prototype = Object.create(Phaser.Sprite.prototype);
