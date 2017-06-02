@@ -6,6 +6,7 @@ var loadState = {
 		['pipeProto.png', 'steamProto.png', 'playerProto.png', 'heartProto.png', 'enemyProto.png', 'wallProto.png', 'oozeProto.png', 'leakProto.png', 'instructions.png']);
 		game.load.tilemap('level', 'prototypeStage.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.spritesheet('tilesheet', 'prototypeStage.png', 40, 40);
+		// game.load.image('tiles', 'brickwall.png');
 		game.load.image('playbutton', 'playButton.png');
 
 },

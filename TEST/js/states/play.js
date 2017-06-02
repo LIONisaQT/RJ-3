@@ -91,7 +91,7 @@ var playState= {
 		// player attack collisions
 		if (game.physics.arcade.overlap(enemy, player.hitboxes, null, null, this)) {
 			console.log("hit");
-			enemy.kill();
+			// enemy.kill();
 		}
 		game.physics.arcade.collide(player.hitboxes, leaks, this.leakFix, null, this);
 
