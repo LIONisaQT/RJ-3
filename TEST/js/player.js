@@ -43,15 +43,13 @@ function Player(game, key) {
 	// this.vacuum.body.setSize(100, 60, this.width, -20);
 	// this.vacuum.name = "vacuum";
 	// this.basicAtk.damage = 1;
-
-	// disable hitboxes right after creations so they're immediately inactive
-	disableAllHitboxes();
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+	disableAllHitboxes();
 	this.body.velocity.y = 0;
 	game.debug.body(this.basicAtk);
 	// game.debug.body(this.vacuum);
