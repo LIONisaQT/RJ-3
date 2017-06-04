@@ -93,7 +93,7 @@ var playState= {
 			console.log("hit");
 			// enemy.kill();
 		}
-		game.physics.arcade.collide(player.atksHitboxes, leaks, this.leakFix, null, this);
+		game.physics.arcade.collide(player.atkHitboxes, leaks, this.leakFix, null, this);
 
 		// world updates
 		this.waterLevel -= 0.05 * this.totalLeaks;
