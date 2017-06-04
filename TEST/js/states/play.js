@@ -89,11 +89,11 @@ var playState= {
 		}
 
 		// player attack collisions
-		if (game.physics.arcade.overlap(enemy, player.hitboxes, null, null, this)) {
+		if (game.physics.arcade.overlap(enemy, player.atkHitboxes, null, null, this)) {
 			console.log("hit");
 			// enemy.kill();
 		}
-		game.physics.arcade.collide(player.hitboxes, leaks, this.leakFix, null, this);
+		game.physics.arcade.collide(player.atksHitboxes, leaks, this.leakFix, null, this);
 
 		// world updates
 		this.waterLevel -= 0.05 * this.totalLeaks;

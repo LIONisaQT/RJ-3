@@ -22,15 +22,15 @@ function Player(game, key) {
 	var barConfig = {x: 200, y: 20};
 	this.myHealthBar = new HealthBar(this.game, barConfig);
 
-	// create group for player's hitboxes
-	this.hitboxes = game.add.group();
-	// give all hitboxes physics body
-	this.hitboxes.enableBody = true;
-	// make hitboxes children of the player so they will move with the player
-	this.addChild(this.hitboxes);
+	// create group for player's atkHitboxes
+	this.atksatkHitboxes = game.add.group();
+	// give all atkHitboxes physics body
+	this.atkHitboxes.enableBody = true;
+	// make atkHitboxes children of the player so they will move with the player
+	this.addChild(this.atkHitboxes);
 
 	// create a hitbox (empty sprite)
-	this.basicAtk = this.hitboxes.create(this.body.x, this.body.y, null);
+	this.basicAtk = this.atkHitboxes.create(this.body.x, this.body.y, null);
 	// set size of hitbox and positiong relative to player
 	this.basicAtk.body.setSize(50, 40, this.width, 0);
 	// properties of the hitbox
@@ -39,17 +39,17 @@ function Player(game, key) {
 	this.basicAtk.knockbackDirection = 0.5;
 	this.basicAtk.knockbackAmt = 600;
 
-	// this.vacuum = this.hitboxes.create(this.body.x, this.body.y, null);
-	// this.vacuum.body.setSize(100, 60, this.width, -20);
-	// this.vacuum.name = "vacuum";
-	// this.basicAtk.damage = 1;
+	this.vacuum = this.atkHitboxes.create(this.body.x, this.body.y, null);
+	this.vacuum.body.setSize(100, 60, this.width, -20);
+	this.vacuum.name = "vacuum";
+	this.basicAtk.damage = 1;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-	disableAllHitboxes();
+	disableAllatkHitboxes();
 	this.body.velocity.y = 0;
 	game.debug.body(this.basicAtk);
 	// game.debug.body(this.vacuum);
@@ -91,18 +91,18 @@ Player.prototype.update = function() {
 }
 
 function enableHitbox(hitboxName) {
-	for (var i = 0; i < player.hitboxes.children.length; i++) {
-		if (player.hitboxes.children[i].name === hitboxName) {
-			player.hitboxes.children[i].reset(player.body.x, player.body.y);
+	for (var i = 0; i < player.atkHitboxes.children.length; i++) {
+		if (player.atkHitboxes.children[i].name === hitboxName) {
+			player.atkHitboxes.children[i].reset(player.body.x, player.body.y);
 		}
 	}
 
-	// will call disableAllHitboxes after a delay (letting the animation complete)
-	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllHitboxes, this);
+	// will call disableAllatkHitboxes after a delay (letting the animation complete)
+	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllatkHitboxes, this);
 }
 
-function disableAllHitboxes() {
-	player.hitboxes.forEachExists(function(hitbox) {hitbox.kill();});
+function disableAllatkHitboxes() {
+	player.atkHitboxes.forEachExists(function(hitbox) {hitbox.kill();});
 }
 
 function stunned() {
