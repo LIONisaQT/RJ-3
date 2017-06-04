@@ -6,7 +6,7 @@ function Player(game, key) {
 	// add properties
 	this.anchor.set(0.5, 0.5);
 	game.physics.enable(this);
-	this.defaultVelocity = 500;
+	this.defaultVelocity = 200;
     this.velocityNormal = this.defaultVelocity;
     // this.velocityFriction = 100;
 	this.body.collideWorldBounds = true;
@@ -98,7 +98,7 @@ function enableHitbox(hitboxName) {
 	}
 
 	// will call disableAllatkHitboxes after a delay (letting the animation complete)
-	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllatkHitboxes, this);
+	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllHitboxes, this);
 }
 
 function disableAllHitboxes() {

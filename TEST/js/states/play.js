@@ -9,14 +9,14 @@ var playState= {
 
 		// add map
 		map = game.add.tilemap('level');
-		map.addTilesetImage('wall', 'tilesheet');
+		map.addTilesetImage('lvl1', 'tiles');
 		mapLayer = map.createLayer('Tile Layer 1');
 		map.setCollisionByExclusion([]);
 		mapLayer.resizeWorld();
 
 		// world and camera properties
-		game.world.setBounds(0, 0, 3200, 640);
-		game.camera.deadzone = new Phaser.Rectangle(50, 50, 700, 500);
+		game.world.setBounds(0, -150, 5120, 1024);
+		game.camera.deadzone = new Phaser.Rectangle(100, 100, 700, 500);
 
 		// stage properties
 		this.totalLeaks = 3;
@@ -43,13 +43,19 @@ var playState= {
 		}
 
 		// steam
-		steams = game.add.group();
-		for (let i = 0; i < 1; i++) {
-			steam = new Steam(game, 'steam', 220 + i * 120, 300);
-			steams.add(steam);
-			// steam = new Steam(game, 'steam', 220 + i * 120, 340);
-			// steams.add(steam);
-		}
+		// steams = game.add.group();
+		// for (let i = 0; i < 1; i++) {
+		// 	steam = new Steam(game, 'steam', 220 + i * 120, 300);
+		// 	steams.add(steam);
+		// 	// steam = new Steam(game, 'steam', 220 + i * 120, 340);
+		// 	// steams.add(steam);
+		// }
+
+		steam0 = new Steam(game, 'steam', 220, 300);
+		steam1 = new Steam(game, 'steam', 300, 300);
+		steam2 = new Steam(game, 'steam', 380, 300);
+		steam3 = new Steam(game, 'steam', 460, 300);
+		steam4 = new Steam(game, 'steam', 540, 300);
 
 		// leaks
 		leaks = game.add.group();
@@ -79,7 +85,11 @@ var playState= {
 		game.physics.arcade.collide(player, mapLayer);
 		game.physics.arcade.collide(player, enemy, knockback, null, this);
 		game.physics.arcade.collide(player, pipes);
-		game.physics.arcade.collide(player, steams, knockback, null, this);
+		game.physics.arcade.collide(player, steam0, knockback, null, this);
+		game.physics.arcade.collide(player, steam1, knockback, null, this);
+		game.physics.arcade.collide(player, steam2, knockback, null, this);
+		game.physics.arcade.collide(player, steam3, knockback, null, this);
+		game.physics.arcade.collide(player, steam4, knockback, null, this);
 		if (game.physics.arcade.overlap(oozes, player, null, null, this)) {
 			player.velocityNormal = 100;
 			player.body.velocity.x = 1000; // pushes player (like river), remove later
@@ -100,7 +110,11 @@ var playState= {
 		this.waterBar.setPercent(this.waterLevel);
 
 		// debug
-		game.debug.spriteBounds(steams);
+		game.debug.spriteBounds(steam0);
+		game.debug.spriteBounds(steam1);
+		game.debug.spriteBounds(steam2);
+		game.debug.spriteBounds(steam3);
+		game.debug.spriteBounds(steam4);
 
 		// states change
 		// if (player.health == 0 || this.waterLevel <= 0) {
