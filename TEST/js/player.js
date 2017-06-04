@@ -23,7 +23,7 @@ function Player(game, key) {
 	this.myHealthBar = new HealthBar(this.game, barConfig);
 
 	// create group for player's atkHitboxes
-	this.atksatkHitboxes = game.add.group();
+	this.atkHitboxes = game.add.group();
 	// give all atkHitboxes physics body
 	this.atkHitboxes.enableBody = true;
 	// make atkHitboxes children of the player so they will move with the player
@@ -49,7 +49,7 @@ Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
-	disableAllatkHitboxes();
+	disableAllHitboxes();
 	this.body.velocity.y = 0;
 	game.debug.body(this.basicAtk);
 	// game.debug.body(this.vacuum);
@@ -101,7 +101,7 @@ function enableHitbox(hitboxName) {
 	game.time.events.add(Phaser.Timer.SECOND / 2, disableAllatkHitboxes, this);
 }
 
-function disableAllatkHitboxes() {
+function disableAllHitboxes() {
 	player.atkHitboxes.forEachExists(function(hitbox) {hitbox.kill();});
 }
 

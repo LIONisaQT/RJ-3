@@ -44,12 +44,12 @@ var playState= {
 
 		// steam
 		steams = game.add.group();
-		// for (let i = 0; i < 5; i++) {
-		// 	steam = new Steam(game, 'steam', 220 + i * 120, 300);
-		// 	steams.add(steam);
-		// 	steam = new Steam(game, 'steam', 220 + i * 120, 340);
-		// 	steams.add(steam);
-		// }
+		for (let i = 0; i < 1; i++) {
+			steam = new Steam(game, 'steam', 220 + i * 120, 300);
+			steams.add(steam);
+			// steam = new Steam(game, 'steam', 220 + i * 120, 340);
+			// steams.add(steam);
+		}
 
 		// leaks
 		leaks = game.add.group();
@@ -103,10 +103,10 @@ var playState= {
 		game.debug.spriteBounds(steams);
 
 		// states change
-		if (player.health == 0 || this.waterLevel <= 0) {
-			console.log("you lose");
-			game.state.start('gameOver');
-		}
+		// if (player.health == 0 || this.waterLevel <= 0) {
+		// 	console.log("you lose");
+		// 	game.state.start('gameOver');
+		// }
 
 		if (this.totalLeaks == 0) {
 			console.log("you win");
