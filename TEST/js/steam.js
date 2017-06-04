@@ -2,6 +2,9 @@ function Steam(game, key, x, y) {
 
 	var enableCollision = true;
 
+	this.localX = x;
+	this.localY = y;
+
 	// call to Phaser.Sprite
 
 	console.log('function Steam');
@@ -32,7 +35,7 @@ Steam.prototype.update = function() {
 }
 function steamInt() {
 	// console.log('steamInt');
-	this.visible = !this.visible;
+	// this.visible = !this.visible;
 	this.body.enable = !this.body.enable;
 	// this.destroy();
 }
