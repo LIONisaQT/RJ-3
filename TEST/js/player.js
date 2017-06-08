@@ -1,6 +1,6 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 140, 320, key);
+	Phaser.Sprite.call(this, game, 360, 420, key);
 	game.add.existing(this);
 
 	// add animations
@@ -61,8 +61,8 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
 	disableAllHitboxes();
 	this.body.velocity.y = 0;
-	game.debug.body(this.basicAtk);
-	game.debug.body(this.vacuum);
+	// game.debug.body(this.basicAtk);
+	// game.debug.body(this.vacuum);
 
 	// player gets hit by damaging element
 	if (this.gotHit) {
@@ -200,15 +200,4 @@ function knockback() {
 			player.body.position.x -= player.knockbackDistance;
 		}
 	}
-}
-
-function vacuumedEnemy() {
-	player.vacuumAmmo += 1;
-	// for (var i = 0; i < ghosts.length; i++) {
-	// 	if (ghosts[i].name === ghost.name) {
-	// 		ghosts[i].destroy();
-	// 	}
-	// }
-	console.log('absorbed');
-	ghost.destroy();
 }

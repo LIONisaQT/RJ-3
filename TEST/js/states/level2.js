@@ -1,27 +1,25 @@
-var playState= {
-	preload: function() {
-		console.log('Play: preload');
-		game.physics.startSystem(Phaser.Physics.ARCADE);
-	},
-	create: function() {
-		console.log('Play: create');
-		game.stage.setBackgroundColor('#180d01');
+var lvl2 = {
+    preload: function() {
+        console.log('lvl2: preload');
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+    },
 
-		this.transition = game.plugins.add(new Phaser.Plugin.StateTransition);
+    create: function() {
+        console.log('lvl2: create');
 
-		// add map
-		map = game.add.tilemap('level');
+        // add map
+        map = game.add.tilemap('level');
 		map.addTilesetImage('wallFloor', 'tiles');
 		bgLayer1 = map.createLayer('bgLayer');
 		collideLayer1 = map.createLayer('collideLayer');
 		map.setCollisionByExclusion([]);
 		collideLayer1.resizeWorld();
 
-		// world and camera properties
-		game.world.setBounds(0, 0, 2176, 1024);
+        // world and camera properties
+		game.world.setBounds(0, 0, 2176, 1216);
 		game.camera.deadzone = new Phaser.Rectangle(100, 100, 700, 500);
 
-		// stage properties
+        // stage properties
 		this.totalLeaks = 3;
 		this.waterLevel = 100;
 
@@ -63,11 +61,9 @@ var playState= {
 		// leaks
 		leaks = game.add.group();
 		for (let i = 0; i < this.totalLeaks; i++) {
-			leak = new Leak(game, 260 + i * 80, 400, 'leak');
+			leak = new Leak(game, 220 + i * 80, 300, 'leak');
 			leaks.add(leak);
 		}
-
-		gate = new Gate(game, 2120, 800);
 
 		// add enemy
 		enemy1 = new Enemy(game, 2000, 360, 'enemy');
@@ -80,9 +76,9 @@ var playState= {
 		// water bar
 		var barConfig = {x: 200, y: 60};
 		this.waterBar = new HealthBar(this.game, barConfig);
+    },
 
-	},
-	leakFix: function(player, leak) {
+    leakFix: function(player, leak) {
 		leak.kill();
 		this.totalLeaks-=1;
 	},
@@ -92,6 +88,7 @@ var playState= {
 			return false;
 		}
 	},
+
 	killEnemy1: function(){
 		if (player.body.x < enemy1.body.x) {
 			enemy1.body.x -= 1;
@@ -117,14 +114,9 @@ var playState= {
 			}
 		}
 	},
-	fadeComplete: function() {
-		console.log("you win");
-		// this.transition.to('level2');
-		game.state.start('level2');
-	},
 
-	update: function() {
-		// player and map collisions
+    update: function() {
+        // player and map collisions
 		game.physics.arcade.collide(player, collideLayer1);
 		game.physics.arcade.collide(player, enemy1, knockback, this.checkOverlap , this);
 		game.physics.arcade.collide(player, enemy2, knockback, null, this);
@@ -165,6 +157,7 @@ var playState= {
 		}
 		if (game.physics.arcade.overlap(enemy2, player.vacuum, null, null, this)) {
 			console.log("hit");
+			var name = "ghost2";
 			enemy2.damage(1);
 			enemy2.body.velocity.x = -150;
 		} else {
@@ -191,12 +184,9 @@ var playState= {
 		// 	game.state.start('gameOver');
 		// }
 
-		if (this.totalLeaks == 0 && game.physics.arcade.overlap(player, gate, null, null, this)) {
-			this.camera.fade('#000000');
-			this.camera.onFadeComplete.add(this.fadeComplete, this);
+		if (this.totalLeaks == 0) {
 			console.log("you win");
-			// this.transition.to('level2');
-			// game.state.start('level2');
+			game.state.start('gameOver');
 		}
-	},
-};
+    }
+}
