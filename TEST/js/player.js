@@ -1,6 +1,6 @@
 function Player(game, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 360, 420, key);
+	Phaser.Sprite.call(this, game, 400, 580, key);
 	game.add.existing(this);
 
 	// add animations
@@ -53,6 +53,10 @@ function Player(game, key) {
 	this.vacuum.body.setSize(100, 60, this.width, -20);
 	this.vacuum.name = "vacuum";
 	this.basicAtk.damage = 1;
+
+	this.text = false;
+	this.text2 = false;
+	this.text3 = false;
 }
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -71,9 +75,32 @@ Player.prototype.update = function() {
 		damaged();
 		this.gotHit = false;
 		this.health -= 1;
-		console.log(this.health / this.maxHealth * 100);
+		console.log(this.health / this.maxHealth * 100);s
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 	}
+
+	if(this.body.x > 528 && this.text == false){
+		this.sentence = game.add.image(player.x-55,player.y-90, 'text2');
+		this.sentence.scale.setTo(0.35,0.35);
+		this.text = true;
+		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture, this);
+	}
+
+	if(this.body.x > 1677 && this.text2 == false){
+		this.sentence2 = game.add.image(player.x-55,player.y-90, 'text4');
+		this.sentence2.scale.setTo(0.35,0.35);
+		this.text2 = true;
+		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture1, this);
+	}
+
+	if(this.body.x > 1677 && this.body.y > 650 && this.text3 == false){
+		this.sentence3 = game.add.image(player.x-55,player.y-90, 'text5');
+		this.sentence3.scale.setTo(0.35,0.35);
+		this.text3 = true;
+		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture2, this);
+	}
+	 console.log(player.body.x);
+	 console.log(player.body.y);
 
 	// player mechanics enabled when not stunned
 	if (this.isStunned == false) {
@@ -200,4 +227,16 @@ function knockback() {
 			player.body.position.x -= player.knockbackDistance;
 		}
 	}
+}
+
+function fadePicture() {
+   this.sentence.kill();
+}
+
+function fadePicture1(){
+	this.sentence2.kill();
+}
+
+function fadePicture2(){
+	this.sentence3.kill();
 }

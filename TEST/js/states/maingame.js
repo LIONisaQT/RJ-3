@@ -15,6 +15,6 @@ game.state.add('black', transitionState);
 game.state.add('play',playState);
 game.state.add('level2', lvl2);
 game.state.add('gameOver',gameOver);
-
+game.state.add('cut', cutScene);
 // start game by first starting w/ the bootState
 game.state.start('load');

@@ -27,9 +27,9 @@ var playState= {
 
 		cursors = game.input.keyboard.createCursorKeys();
 
-		// image of controls
-		var tutorial = game.add.image(100, 500, 'instructions');
-		tutorial.scale.setTo(4);
+		//image of controls
+		var tutorial = game.add.image(100, 800, 'text3');
+		tutorial.scale.setTo(0.5,0.5);
 
 		// pipes
 		pipes = game.add.group();
@@ -44,6 +44,7 @@ var playState= {
 			// ooze = new Ooze(game, 'ooze', game.rnd.integerInRange(22, 36) * 40, game.rnd.integerInRange(5, 11) * 40);
 			// oozes.add(ooze);
 		}
+
 
 		// steam
 		// steams = game.add.group();
@@ -75,6 +76,8 @@ var playState= {
 
 		// add player
 		player = new Player(game, 'player');
+		// add textbox2
+	
 		game.camera.follow(player, null, 0.1, 0.1);
 
 		// water bar
@@ -117,6 +120,33 @@ var playState= {
 			}
 		}
 	},
+
+	killEnemy2: function(){
+		if (player.body.x < enemy2.body.x) {
+			enemy2.body.x -= 1;
+			if(enemy2.body.x < player.vacuum.body.x + 10) {
+				enemy2.kill();
+			}
+		} else if (player.body.x > enemy2.body.x) {
+			enemy2.body.x += 1;
+			if(enemy2.body.x + enemy2.body.width > player.vacuum.body.x + 90) {
+				enemy2.kill();
+			}
+		}
+
+		if (player.body.y > enemy2.body.y) {
+			enemy2.body.y += 1;
+			if(enemy2.body.y + enemy2.body.height > player.vacuum.body.y + 90) {
+				enemy2.kill();
+			}
+		} else if (player.body.y < enemy2.body.y) {
+			enemy2.body.y -= 1;
+			if(enemy2.body.y < player.vacuum.body.y + 10) {
+				enemy2.kill();
+			}
+		}
+	},
+
 	fadeComplete: function() {
 		console.log("you win");
 		// this.transition.to('level2');
@@ -129,6 +159,7 @@ var playState= {
 		game.physics.arcade.collide(player, enemy1, knockback, this.checkOverlap , this);
 		game.physics.arcade.collide(player, enemy2, knockback, null, this);
 		game.physics.arcade.collide(player, pipes);
+		//this.sentences.animations.play('firstrow1'); // play animation of textbox
 		// game.physics.arcade.collide(player, steam0, knockback, null, this);
 		// game.physics.arcade.collide(player, steam1, knockback, null, this);
 		// game.physics.arcade.collide(player, steam2, knockback, null, this);
@@ -163,12 +194,14 @@ var playState= {
 			console.log("hit");
 			enemy2.kill();
 		}
-		if (game.physics.arcade.overlap(enemy2, player.vacuum, null, null, this)) {
-			console.log("hit");
-			enemy2.damage(1);
-			enemy2.body.velocity.x = -150;
+		if (game.physics.arcade.overlap(enemy2, player.vacuum, this.killEnemy2, null, this)) {
+			if (player.x < enemy1.x) {
+				enemy2.x -= 5;
+			}
+			// console.log('enemy getting pulled');
 		} else {
-			enemy2.body.velocity.x = 0;
+			// enemy1.body.velocity.x = 0;
+			// console.log('enemy not getting pulled');
 		}
 
 		game.physics.arcade.collide(player.atkHitboxes, leaks, this.leakFix, null, this);
