@@ -3,13 +3,22 @@ function Player(game, key) {
 	Phaser.Sprite.call(this, game, 140, 320, key);
 	game.add.existing(this);
 
-	// add properties
-	this.anchor.set(0.5, 0.5);
+	// add animations
+	this.animations.add('walkDown', [0, 1, 2, 3], 5, true);
+	this.animations.add('walkUp', [4, 5, 6, 7], 5, true);
+	this.animations.add('walkSide', [8, 9, 10, 11], 5, true);
+
+	// physics properties
 	game.physics.enable(this);
-	this.defaultVelocity = 200;
+	this.scaleVal = 0.5;
+	this.scale.setTo(this.scaleVal, this.scaleVal);
+	this.body.setSize(80, 50, 20, 60);
+	this.anchor.set(0.5, 0.5);
+	this.defaultVelocity = 500;
     this.velocityNormal = this.defaultVelocity;
-    // this.velocityFriction = 100;
 	this.body.collideWorldBounds = true;
+
+	// other properties
 	this.lastKeyPressed;
 	this.maxHealth = 3;
 	this.health = this.maxHealth;
@@ -17,6 +26,7 @@ function Player(game, key) {
 	this.isStunned = false;
 	this.knockbackTimer = 60;
 	this.knockbackDistance = 0.5;
+	this.vacuumAmmo = 0;
 
 	// health bar
 	var barConfig = {x: 200, y: 20};
@@ -32,7 +42,7 @@ function Player(game, key) {
 	// create a hitbox (empty sprite)
 	this.basicAtk = this.atkHitboxes.create(this.body.x, this.body.y, null);
 	// set size of hitbox and positiong relative to player
-	this.basicAtk.body.setSize(50, 40, this.width, 0);
+	this.basicAtk.body.setSize(40, 40, this.width, 0);
 	// properties of the hitbox
 	this.basicAtk.name = "basicAtk";
 	this.basicAtk.damage = 1;
@@ -52,7 +62,7 @@ Player.prototype.update = function() {
 	disableAllHitboxes();
 	this.body.velocity.y = 0;
 	game.debug.body(this.basicAtk);
-	// game.debug.body(this.vacuum);
+	game.debug.body(this.vacuum);
 
 	// player gets hit by damaging element
 	if (this.gotHit) {
@@ -70,22 +80,30 @@ Player.prototype.update = function() {
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 			enableHitbox("basicAtk");
 		}
-		// if (game.input.keyboard.justPressed(Phaser.Keyboard.Z)) {
-		// 	enableHitbox("vacuum");
-		// }
+		if (game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+			player.velocityNormal = 100;
+			enableHitbox("vacuum");
+		}
 		if (cursors.up.isDown) {
+			this.animations.play('walkUp');
 	    	this.body.velocity.y = -this.velocityNormal;      // up
 			this.lastKeyPressed = 'up';
 		} else if(cursors.down.isDown) {
+			this.animations.play('walkDown');
 	    	this.body.velocity.y = this.velocityNormal;       // down
 			this.lastKeyPressed = 'down';
-		}
-		if (cursors.left.isDown) {
+		} else if (cursors.left.isDown) {
+			this.scale.setTo(-player.scaleVal, player.scaleVal);
+			this.animations.play('walkSide');
 	    	this.body.velocity.x = -this.velocityNormal;      // left
 			this.lastKeyPressed = 'left';
 		} else if (cursors.right.isDown) {
+			this.scale.setTo(player.scaleVal, player.scaleVal);
+			this.animations.play('walkSide');
 	    	this.body.velocity.x = this.velocityNormal;       // right
 			this.lastKeyPressed = 'right';
+		} else {
+			this.animations.stop();
 		}
 	}
 }
@@ -93,7 +111,46 @@ Player.prototype.update = function() {
 function enableHitbox(hitboxName) {
 	for (var i = 0; i < player.atkHitboxes.children.length; i++) {
 		if (player.atkHitboxes.children[i].name === hitboxName) {
-			player.atkHitboxes.children[i].reset(player.body.x, player.body.y);
+			switch (player.atkHitboxes.children[i].name) {
+				case 'basicAtk':
+					switch (player.lastKeyPressed) {
+						case 'right':
+							player.atkHitboxes.children[i].reset(player.body.x - 25, player.body.y - 10);
+							break;
+						case 'left':
+							player.atkHitboxes.children[i].reset(player.body.x - 100, player.body.y - 10);
+							break;
+						case 'up':
+							player.atkHitboxes.children[i].reset(player.body.x - 64, player.body.y - 50);
+							break;
+						case 'down':
+							player.atkHitboxes.children[i].reset(player.body.x - 64, player.body.y + 20);
+							break;
+						default:
+					}
+					break;
+				case 'vacuum':
+					switch (player.lastKeyPressed) {
+						case 'right':
+							player.vacuum.body.setSize(100, 60, this.width, -20);
+							player.atkHitboxes.children[i].reset(player.body.x - 25, player.body.y - 10);
+							break;
+						case 'left':
+							player.vacuum.body.setSize(100, 60, this.width, -20);
+							player.atkHitboxes.children[i].reset(player.body.x - 160, player.body.y - 10);
+							break;
+						case 'up':
+							player.vacuum.body.setSize(60, 100, this.width, -20);
+							player.atkHitboxes.children[i].reset(player.body.x - 75, player.body.y - 90);
+							break;
+						case 'down':
+							player.vacuum.body.setSize(60, 100, this.width, -20);
+							player.atkHitboxes.children[i].reset(player.body.x - 75, player.body.y + 40);
+							break;
+						default:
+					}
+				default:
+			}
 		}
 	}
 
@@ -133,6 +190,7 @@ function knockback() {
 	// 		player.body.position.y -= player.knockbackDistance;
 	// 	}
 	// }
+
 	if (player.lastKeyPressed == 'left') {
 		for (let i = 0; i < player.knockbackTimer; i++) {
 			player.body.position.x += player.knockbackDistance;
@@ -142,4 +200,15 @@ function knockback() {
 			player.body.position.x -= player.knockbackDistance;
 		}
 	}
+}
+
+function vacuumedEnemy() {
+	player.vacuumAmmo += 1;
+	// for (var i = 0; i < ghosts.length; i++) {
+	// 	if (ghosts[i].name === ghost.name) {
+	// 		ghosts[i].destroy();
+	// 	}
+	// }
+	console.log('absorbed');
+	ghost.destroy();
 }
