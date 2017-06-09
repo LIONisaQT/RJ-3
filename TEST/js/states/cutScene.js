@@ -8,7 +8,7 @@ create: function(){
 
 	this.sentence.animations.add('firstrow', [0,1,2,3], 1, false);
 	//this.sentence.animations.add('secondrow', [4,5,6], 5, false);
-	
+
 	this.shrine = game.add.audio('shrine',0.6);
 	this.shrine.loopFull();
 

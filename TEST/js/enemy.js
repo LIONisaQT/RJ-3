@@ -1,7 +1,9 @@
-function Enemy(game, distX, distY, key) {
-    Phaser.Sprite.call(this, game, distX, distY, key);
+function Enemy(game, distX, distY) {
+    Phaser.Sprite.call(this, game, distX, distY, 'enemy');
 
     game.add.existing(this);
+
+    this.animations.add('rawr', [0, 1], 5, true);
 
 	// add properties
 	this.anchor.set(0.5, 0.5);
@@ -12,27 +14,13 @@ function Enemy(game, distX, distY, key) {
     this.maxHealth = 20;
     this.health = this.maxHealth;
 
-    // this.scale.setTo(3);
+    this.scale.setTo(1/8);
     // this.velocityNormal = 200;
 }
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
-function vacuumed(enemy) {
-    console.log("hit");
-    ghost = new Ghost(game, enemy.x, enemy.y);
-    ghosts.add(ghost);
-    enemy.kill();
-}
-
-function gettingPulled(enemy) {
-    console.log("pulling!");
-    enemy.body.velocity.x = -100;
-}
-
 Enemy.prototype.update = function() {
-    if (this.health == 0) {
-        ghost = new Ghost(game, this.x, this.y);
-    }
+    this.animations.play('rawr');
 }

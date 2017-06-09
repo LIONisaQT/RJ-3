@@ -1,5 +1,5 @@
 function Gate(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'wall');
+    Phaser.Sprite.call(this, game, x, y, null);
 
     game.add.existing(this);
 

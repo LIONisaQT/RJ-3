@@ -12,7 +12,7 @@ function Player(game, key) {
 	game.physics.enable(this);
 	this.scaleVal = 0.5;
 	this.scale.setTo(this.scaleVal, this.scaleVal);
-	this.body.setSize(80, 50, 20, 60);
+	this.body.setSize(60, 50, 35, 60);
 	this.anchor.set(0.5, 0.5);
 	this.defaultVelocity = 500;
     this.velocityNormal = this.defaultVelocity;
@@ -75,7 +75,7 @@ Player.prototype.update = function() {
 		damaged();
 		this.gotHit = false;
 		this.health -= 1;
-		console.log(this.health / this.maxHealth * 100);s
+		console.log(this.health / this.maxHealth * 100);
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 	}
 
@@ -99,8 +99,6 @@ Player.prototype.update = function() {
 		this.text3 = true;
 		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture2, this);
 	}
-	 console.log(player.body.x);
-	 console.log(player.body.y);
 
 	// player mechanics enabled when not stunned
 	if (this.isStunned == false) {

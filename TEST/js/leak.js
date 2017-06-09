@@ -1,7 +1,9 @@
-function Leak(game, distX, distY, key) {
-    Phaser.Sprite.call(this, game, distX, distY, key);
+function Leak(game, distX, distY) {
+    Phaser.Sprite.call(this, game, distX, distY, 'leak');
 
     game.add.existing(this);
+
+    this.animations.add('flow', [0, 1, 2, 3, 4, 5], 5, true);
 
     // add properties
     this.anchor.set(0.5, 0.5);
@@ -17,6 +19,7 @@ Leak.prototype = Object.create(Phaser.Sprite.prototype);
 Leak.prototype.constructor = Leak;
 
 Leak.prototype.update = function() {
+    this.animations.play('flow');
 	// game.physics.arcade.collide(this, player);
 
 }
