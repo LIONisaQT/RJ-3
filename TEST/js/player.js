@@ -1,6 +1,6 @@
-function Player(game,px,py, key) {
+function Player(game, px, py) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, px, py, key);
+	Phaser.Sprite.call(this, game, px, py, 'player');
 	game.add.existing(this);
 
 	// add animations
@@ -64,18 +64,25 @@ Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
 	disableAllHitboxes();
+	// disable 8-direction (movement should be like Pokemon)
+	this.body.velocity.x = 0;
 	this.body.velocity.y = 0;
 	// game.debug.body(this.basicAtk);
 	// game.debug.body(this.vacuum);
-
+	// world collisions
+	game.physics.arcade.collide(this, collideLayer1);
+	if (game.physics.arcade.overlap(this, oozes, null, null, this)) {
+		this.velocityNormal = 100;
+	} else {
+		this.velocityNormal = this.defaultVelocity;
+	}
+	game.physics.arcade.collide(this, pipes);
+	game.physics.arcade.collide(this, steamMachine);
 	// player gets hit by damaging element
 	if (this.gotHit) {
-		// console.log(this.hp);
 		stunned();
-		damaged();
 		this.gotHit = false;
-		this.health -= 1;
-		console.log(this.health / this.maxHealth * 100);
+		this.damage(1);
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 	}
 
@@ -102,6 +109,11 @@ Player.prototype.update = function() {
 
 	// player mechanics enabled when not stunned
 	if (this.isStunned == false) {
+		// player can only get knocked back if not stunned, otherwise stun-lock possible
+		game.physics.arcade.collide(this, enemies, knockback, null, this);
+		game.physics.arcade.collide(this, steams, knockback, null, this);
+
+		// attacks
 		if (game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
 			enableHitbox("basicAtk");
 		}
@@ -109,11 +121,13 @@ Player.prototype.update = function() {
 			player.velocityNormal = 100;
 			enableHitbox("vacuum");
 		}
+
+		// movement
 		if (cursors.up.isDown) {
 			this.animations.play('walkUp');
 	    	this.body.velocity.y = -this.velocityNormal;      // up
 			this.lastKeyPressed = 'up';
-		} else if(cursors.down.isDown) {
+		} else if (cursors.down.isDown) {
 			this.animations.play('walkDown');
 	    	this.body.velocity.y = this.velocityNormal;       // down
 			this.lastKeyPressed = 'down';
@@ -190,6 +204,8 @@ function disableAllHitboxes() {
 function stunned() {
 	console.log('stunned!');
 	player.isStunned = true;
+	player.body.velocity.x = 0;
+	player.body.velocity.y = 0;
 	game.time.events.add(1000, notStunned, this);
 }
 
@@ -198,25 +214,19 @@ function notStunned() {
 	player.isStunned = false;
 }
 
-function damaged() {
-	player.hp -= 1;
-}
-
 function knockback() {
 	player.gotHit = true;
 	console.log('knockback');
 
-	// if (player.lastKeyPressed == 'up') {
-	// 	for (let i = 0; i < player.knockbackTimer; i++) {
-	// 		player.body.position.y += player.knockbackDistance;
-	// 	}
-	// } else if(player.lastKeyPressed == 'down') {
-	// 	for (let i = 0; i < player.knockbackTimer; i++) {
-	// 		player.body.position.y -= player.knockbackDistance;
-	// 	}
-	// }
-
-	if (player.lastKeyPressed == 'left') {
+	if (player.lastKeyPressed == 'up') {
+		for (let i = 0; i < player.knockbackTimer; i++) {
+			player.body.position.y += player.knockbackDistance;
+		}
+	} else if (player.lastKeyPressed == 'down') {
+		for (let i = 0; i < player.knockbackTimer; i++) {
+			player.body.position.y -= player.knockbackDistance;
+		}
+	} else if (player.lastKeyPressed == 'left') {
 		for (let i = 0; i < player.knockbackTimer; i++) {
 			player.body.position.x += player.knockbackDistance;
 		}

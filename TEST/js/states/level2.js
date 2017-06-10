@@ -63,9 +63,13 @@ var lvl2= {
 		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y + 96);
 
 		// leaks
-		leak = new Leak(game, 96, 768);
-		leak1 = new Leak(game, 768, 96);
-		leak2 = new Leak(game, 768, 1440);
+		leaks = game.add.group();
+		leak = new Leak(game, 96, 768, this);
+		leaks.add(leak);
+		leak1 = new Leak(game, 768, 96, this);
+		leaks.add(leak1);
+		leak2 = new Leak(game, 768, 1440, this);
+		leaks.add(leak2);
 
 		gate = new Gate(game, 1431, 768);
 
@@ -86,111 +90,6 @@ var lvl2= {
 		this.waterBar = new HealthBar(this.game, barConfig);
 
 	},
-	leakFix: function(player, leak) {
-		leak.kill();
-		this.totalLeaks -= 1;
-	},
-
-	leakFix1: function(player, leak1) {
-		leak1.kill();
-		this.totalLeaks -= 1;
-	},
-
-	leakFix2: function(player, leak2) {
-		leak2.kill();
-		this.totalLeaks -= 1;
-	},
-
-	checkOverlap: function() {
-		if (game.physics.arcade.overlap(enemy1, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	checkOverlap2: function() {
-		if (game.physics.arcade.overlap(enemy2, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	checkOverlap3: function() {
-		if (game.physics.arcade.overlap(enemy3, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	killEnemy1: function(){
-		if (player.body.x < enemy1.body.x) {
-			enemy1.body.x -= 1;
-			if(enemy1.body.x < player.vacuum.body.x + 10) {
-				enemy1.kill();
-			}
-		} else if (player.body.x > enemy1.body.x) {
-			enemy1.body.x += 1;
-			if(enemy1.body.x + enemy1.body.width > player.vacuum.body.x + 90) {
-				enemy1.kill();
-			}
-		}
-
-		if (player.body.y > enemy1.body.y) {
-			enemy1.body.y += 1;
-			if(enemy1.body.y + enemy1.body.height > player.vacuum.body.y + 90) {
-				enemy1.kill();
-			}
-		} else if (player.body.y < enemy1.body.y) {
-			enemy1.body.y -= 1;
-			if(enemy1.body.y < player.vacuum.body.y + 10) {
-				enemy1.kill();
-			}
-		}
-	},
-	killEnemy2: function(){
-		if (player.body.x < enemy2.body.x) {
-			enemy2.body.x -= 1;
-			if(enemy2.body.x < player.vacuum.body.x + 10) {
-				enemy2.kill();
-			}
-		} else if (player.body.x > enemy2.body.x) {
-			enemy2.body.x += 1;
-			if(enemy2.body.x + enemy2.body.width > player.vacuum.body.x + 90) {
-				enemy2.kill();
-			}
-		}
-
-		if (player.body.y > enemy2.body.y) {
-			enemy2.body.y += 1;
-			if(enemy2.body.y + enemy2.body.height > player.vacuum.body.y + 90) {
-				enemy2.kill();
-			}
-		} else if (player.body.y < enemy2.body.y) {
-			enemy2.body.y -= 1;
-			if(enemy2.body.y < player.vacuum.body.y + 10) {
-				enemy2.kill();
-			}
-		}
-	},
-	killEnemy3: function(){
-		if (player.body.x < enemy3.body.x) {
-			enemy3.body.x -= 1;
-			if(enemy3.body.x < player.vacuum.body.x + 10) {
-				enemy3.kill();
-			}
-		} else if (player.body.x > enemy3.body.x) {
-			enemy3.body.x += 1;
-			if(enemy3.body.x + enemy3.body.width > player.vacuum.body.x + 90) {
-				enemy3.kill();
-			}
-		}
-
-		if (player.body.y > enemy3.body.y) {
-			enemy3.body.y += 1;
-			if(enemy3.body.y + enemy3.body.height > player.vacuum.body.y + 90) {
-				enemy3.kill();
-			}
-		} else if (player.body.y < enemy3.body.y) {
-			enemy3.body.y -= 1;
-			if(enemy3.body.y < player.vacuum.body.y + 10) {
-				enemy3.kill();
-			}
-		}
-	},
 
 	fadeCompleteWin: function() {
 		console.log("you win");
@@ -205,78 +104,6 @@ var lvl2= {
 	},
 
 	update: function() {
-			//console.log(player.body.x);
-		// player and map collisions
-		game.physics.arcade.collide(player, collideLayer1);
-		game.physics.arcade.collide(player, enemy1, knockback, this.checkOverlap, this);
-		game.physics.arcade.collide(player, enemy2, knockback, this.checkOverlap2, this);
-		game.physics.arcade.collide(player, enemy3, knockback, this.checkOverlap3, this);
-		game.physics.arcade.collide(player, pipes);
-		game.physics.arcade.collide(player, steam0, knockback, null, this);
-		game.physics.arcade.collide(player, steam1, knockback, null, this);
-		if (game.physics.arcade.overlap(oozes, player, null, null, this)) {
-			player.velocityNormal = 100;
-			player.body.velocity.x = 1000; // pushes player (like river), remove later
-		} else {
-			player.velocityNormal = player.defaultVelocity;
-			player.body.velocity.x = 0; // undoes pushing of player, remove later
-		}
-
-		// if(this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
-		// 	this.shrine.stop();
-		// 	this.start();
-		// }
-
-		// player attack collisions
-		// enemy1
-		if (game.physics.arcade.overlap(enemy1, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy1.kill();
-		}
-		if (game.physics.arcade.overlap(enemy1, player.vacuum, this.killEnemy1, null, this)) {
-			if (player.x < enemy1.x) {
-				enemy1.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
-
-		// enemy2
-		if (game.physics.arcade.overlap(enemy2, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy2.kill();
-		}
-		if (game.physics.arcade.overlap(enemy2, player.vacuum, this.killEnemy2, null, this)) {
-			if (player.x < enemy2.x) {
-				enemy2.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
-
-		// enemy3
-		if (game.physics.arcade.overlap(enemy3, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy3.kill();
-		}
-		if (game.physics.arcade.overlap(enemy3, player.vacuum, this.killEnemy3, null, this)) {
-			if (player.x < enemy3.x) {
-				enemy3.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
-
-		game.physics.arcade.collide(player.basicAtk, leak, this.leakFix, null, this);
-		game.physics.arcade.collide(player.basicAtk, leak1, this.leakFix, null, this);
-		game.physics.arcade.collide(player.basicAtk, leak2, this.leakFix, null, this);
-
 		// world updates
 		this.waterLevel -= 0.02 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);

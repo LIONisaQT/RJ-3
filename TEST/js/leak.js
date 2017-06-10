@@ -1,4 +1,4 @@
-function Leak(game, distX, distY) {
+function Leak(game, distX, distY, st) {
     Phaser.Sprite.call(this, game, distX, distY, 'leak');
 
     game.add.existing(this);
@@ -13,13 +13,20 @@ function Leak(game, distX, distY) {
     this.body.enable = true;
     // this.scale.setTo(3);
     // this.velocityNormal = 200;
+    this.state = st;
 }
 
 Leak.prototype = Object.create(Phaser.Sprite.prototype);
 Leak.prototype.constructor = Leak;
 
 Leak.prototype.update = function() {
+    game.physics.arcade.overlap(this, player.basicAtk, function() {fixLeak(this, this.state);}, null, this);
     this.animations.play('flow');
 	// game.physics.arcade.collide(this, player);
+}
 
+function fixLeak(l, s) {
+    console.log('fix leak');
+    l.kill();
+    s.totalLeaks -= 1;
 }
