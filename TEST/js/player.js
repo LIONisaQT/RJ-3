@@ -1,6 +1,6 @@
-function Player(game, key) {
+function Player(game,px,py, key) {
 	// call to Phaser.Sprite
-	Phaser.Sprite.call(this, game, 400, 580, key);
+	Phaser.Sprite.call(this, game, px, py, key);
 	game.add.existing(this);
 
 	// add animations

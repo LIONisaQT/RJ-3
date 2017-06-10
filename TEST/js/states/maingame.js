@@ -14,6 +14,7 @@ game.state.add('menu',menuState);
 game.state.add('black', transitionState);
 game.state.add('play',playState);
 game.state.add('level2', lvl2);
+game.state.add('level3', lvl3);
 game.state.add('gameOver',gameOver);
 game.state.add('win', gameWin);
 game.state.add('cut', cutScene);

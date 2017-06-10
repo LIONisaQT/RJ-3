@@ -5,9 +5,12 @@ var playState= {
 	},
 	create: function() {
 		console.log('Play: create');
-		game.stage.setBackgroundColor('#180d01');
+		game.stage.setBackgroundColor('#4f2412');
 
 		this.transition = game.plugins.add(new Phaser.Plugin.StateTransition);
+
+		this.snow = game.add.audio('Snowland',0.6);
+		this.snow.loopFull();
 
 		// add map
 		map = game.add.tilemap('level');
@@ -69,7 +72,7 @@ var playState= {
 		enemy3 = new Enemy(game, 1952, 736);
 
 		// add player
-		player = new Player(game, 'player');
+		player = new Player(game,400,580, 'player');
 		game.camera.follow(player, null, 0.1, 0.1);
 
 		// water bar
@@ -174,12 +177,14 @@ var playState= {
 	},
 
 	fadeCompleteWin: function() {
-		console.log("you win");
-		game.state.start('win');
+		console.log("level2");
+		this.snow.stop();
+		game.state.start('level2');
 	},
 
 	fadeCompleteLose: function() {
 		console.log("you lose");
+		this.snow.stop();
 		game.state.start('gameOver');
 	},
 
@@ -199,6 +204,11 @@ var playState= {
 			player.velocityNormal = player.defaultVelocity;
 			player.body.velocity.x = 0; // undoes pushing of player, remove later
 		}
+
+		// if(this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
+		// 	this.shrine.stop();
+		// 	this.start();
+		// }
 
 		// player attack collisions
 		// enemy1
