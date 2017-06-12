@@ -8,7 +8,6 @@ function Player(game, px, py) {
 	this.animations.add('walkUp', [4, 5, 6, 7], 5, true);
 	this.animations.add('walkSide', [8, 9, 10, 11], 5, true);
 
-
 	// physics properties
 	game.physics.enable(this);
 	this.scaleVal = 0.5;
@@ -30,10 +29,13 @@ function Player(game, px, py) {
 	this.vacuumAmmo = 0;
 
 	// health bar
-	var barConfig = {x: 250, y: 20, bar: {color: '#ff4f4f'}};
+	var barConfig = {x: 250, y: 20, bar: {color: '#c41f1f'}};
 	this.myHealthBar = new HealthBar(this.game, barConfig);
-	barConfig = {x: 250, y: 16, height: 8, bar: {color: '#fc7171'}};
+	barConfig = {x: this.myHealthBar.x, y: this.myHealthBar.y - 4, height: 8, bar: {color: '#fc7171'}};
 	this.myHealthBarHighlight = new HealthBar(this.game, barConfig);
+	heartIcon = game.add.sprite(this.myHealthBar.x - 245, this.myHealthBar.y - 15, 'heart');
+	heartIcon.scale.setTo(0.75);
+	heartIcon.fixedToCamera = true;
 
 	// create group for player's atkHitboxes
 	this.atkHitboxes = game.add.group();
