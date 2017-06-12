@@ -15,7 +15,7 @@ function Player(game, px, py) {
 	this.scale.setTo(this.scaleVal, this.scaleVal);
 	this.body.setSize(60, 50, 35, 60);
 	this.anchor.set(0.5, 0.5);
-	this.defaultVelocity = 200;
+	this.defaultVelocity = 800;
     this.velocityNormal = this.defaultVelocity;
 	this.body.collideWorldBounds = true;
 
@@ -91,27 +91,6 @@ Player.prototype.update = function() {
 		this.damage(1);
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 		this.myHealthBarHighlight.setPercent(this.health / this.maxHealth * 100);
-	}
-
-	if(this.body.x > 528 && this.text == false){
-		this.sentence = game.add.image(player.x-55,player.y-90, 'text2');
-		this.sentence.scale.setTo(0.35,0.35);
-		this.text = true;
-		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture, this);
-	}
-
-	if(this.body.x > 1677 && this.text2 == false){
-		this.sentence2 = game.add.image(player.x-55,player.y-90, 'text4');
-		this.sentence2.scale.setTo(0.35,0.35);
-		this.text2 = true;
-		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture1, this);
-	}
-
-	if(this.body.x > 1677 && this.body.y > 650 && this.text3 == false){
-		this.sentence3 = game.add.image(player.x-55,player.y-90, 'text5');
-		this.sentence3.scale.setTo(0.35,0.35);
-		this.text3 = true;
-		game.time.events.add(Phaser.Timer.SECOND * 2, fadePicture2, this);
 	}
 
 	// player mechanics enabled when not stunned

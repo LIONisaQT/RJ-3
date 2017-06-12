@@ -12,6 +12,9 @@ var gameOver= {
 		// When player presses R, call start function, which sends me back to menu-screen
 		rkey.onDown.addOnce(this.restart,this);
 		this.bg.animations.play('background');
+		this.pp = game.add.audio('sad',0.6);
+        this.pp.loopFull();
+
 	},
 
 	update: function(){
@@ -23,6 +26,7 @@ var gameOver= {
 	},
 
 	restart: function (){
+		this.pp.stop();
 		game.state.start('menu');
 	},
 };

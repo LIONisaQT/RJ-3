@@ -7,12 +7,15 @@ var loadState = {
 		game.load.audio('Crystal',['Crystal.mp3']);
 		game.load.audio('MC',['MC.mp3']);
 		game.load.audio('walk',['Walk.mp3']);
+		game.load.audio('lastlevel',['lastlevel.mp3']);
+		game.load.audio('sad', ['Sadness.mp3']);
 		game.load.path = '../TEST/assets/img/';
-		game.load.images(['pipe', 'steamOld', 'heartOld', 'enemyOld', 'wall', 'ooze', 'leakOld', 'instructions', 'steamMachine', 'text3','text2','text4','text5', 'startScreen', 'heart', 'water'],
-		['pipeProto.png', 'steamProto.png', 'heartProto.png', 'enemyProto.png', 'wallProto.png', 'oozeProto.png', 'leakProto.png', 'instructions.png', 'steammachine.png',  'text3.png', 'text22.png','text44.png','text55.png', 'startscreen.png', 'heart.png', 'water2.png']);
+		game.load.images(['pipe', 'steamOld', 'heartOld', 'enemyOld', 'wall', 'ooze', 'leakOld', 'instructions', 'steamMachine', 'text3','text2','text4','text5', 'startScreen', 'heart', 'water','finaltext'],
+		['pipeProto.png', 'steamProto.png', 'heartProto.png', 'enemyProto.png', 'wallProto.png', 'oozeProto.png', 'leakProto.png', 'instructions.png', 'steammachine.png',  'text3.png', 'text22.png','text44.png','text55.png', 'startscreen.png', 'heart.png', 'water2.png','finaltext.png']);
 		game.load.tilemap('level', 'flint1.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.tilemap('level22', 'level2.json', null, Phaser.Tilemap.TILED_JSON); // lvl 2
 		game.load.tilemap('level33', 'level3.json', null, Phaser.Tilemap.TILED_JSON); // lvl 3
+		game.load.tilemap('level44', 'level4.json', null, Phaser.Tilemap.TILED_JSON); // lvl 4
 		game.load.spritesheet('player', 'FlintSheet.png', 128, 128, 15);
 		game.load.spritesheet('steam', 'steam_animation.png', 32, 64, 5);
 		game.load.spritesheet('leak', 'waterSheet.png', 64, 64, 6);

@@ -94,7 +94,7 @@ var lvl3= {
 	fadeCompleteWin: function() {
 		console.log("you win");
 		this.mc.stop();
-		//game.state.start('win');
+		game.state.start('level4');
 	},
 
 	fadeCompleteLose: function() {

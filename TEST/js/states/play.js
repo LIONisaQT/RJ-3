@@ -4,6 +4,9 @@ var playState= {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 	},
 	create: function() {
+		this.t1 = false;
+		this.t2 = false;	
+		this.t3 = false;
 		console.log('Play: create');
 		game.stage.setBackgroundColor('#4f2412');
 
@@ -106,8 +109,43 @@ var playState= {
 		game.state.start('gameOver');
 	},
 
+	fadePicture: function() {
+  	this.sentence.kill();
+	},
+
+	fadePicture1: function(){
+		this.sentence2.kill();
+	},
+
+	fadePicture2: function(){
+		this.sentence3.kill();
+	},
+
+
 	update: function() {
 		// world updates
+		if(player.body.x > 528 && this.t1 == false){
+			this.sentence = game.add.image(player.x-55,player.y-90, 'text2');
+			this.sentence.scale.setTo(0.35,0.35);
+			this.t1= true;
+			console.log('hi');
+			game.time.events.add(Phaser.Timer.SECOND * 2, this.fadePicture, this);
+		}
+
+		if(player.body.x > 1677 && this.t2 == false){
+			this.sentence2 = game.add.image(player.x-55,player.y-90, 'text4');
+			this.sentence2.scale.setTo(0.35,0.35);
+			this.t2 = true;
+			game.time.events.add(Phaser.Timer.SECOND * 2, this.fadePicture1, this);
+		}
+
+		if(player.body.x > 1677 && player.body.y > 650 && this.t3 == false){
+			this.sentence3 = game.add.image(player.x-55,player.y-90, 'text5');
+			this.sentence3.scale.setTo(0.35,0.35);
+			this.t3 = true;
+			game.time.events.add(Phaser.Timer.SECOND * 2, this.fadePicture2, this);
+		}
+
 		this.waterLevel -= 0.05 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
 		this.waterBarHighlight.setPercent(this.waterLevel);
