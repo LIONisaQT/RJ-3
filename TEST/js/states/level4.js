@@ -64,9 +64,13 @@ var lvl4444= {
 		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
 
 		// leaks
-		 leak = new Leak(game, 1024, 700);
-		 leak1 = new Leak(game, 928, 992);
-		 leak2 = new Leak(game, 1408, 832);
+		 leaks = game.add.group();
+		 leak = new Leak(game, 1024, 700,this);
+		 leaks.add(leak);
+		 leak1 = new Leak(game, 928, 992,this);
+		 leaks.add(leak1);
+		 leak2 = new Leak(game, 1408, 832,this);
+		 leaks.add(leak2);
 		 //console.log(player.body.x);
 		 //console.log(player.body.y);
 		// leak2 = new Leak(game, 768, 1440);
