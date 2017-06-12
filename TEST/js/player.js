@@ -8,13 +8,14 @@ function Player(game, px, py) {
 	this.animations.add('walkUp', [4, 5, 6, 7], 5, true);
 	this.animations.add('walkSide', [8, 9, 10, 11], 5, true);
 
+
 	// physics properties
 	game.physics.enable(this);
 	this.scaleVal = 0.5;
 	this.scale.setTo(this.scaleVal, this.scaleVal);
 	this.body.setSize(60, 50, 35, 60);
 	this.anchor.set(0.5, 0.5);
-	this.defaultVelocity = 500;
+	this.defaultVelocity = 200;
     this.velocityNormal = this.defaultVelocity;
 	this.body.collideWorldBounds = true;
 

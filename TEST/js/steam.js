@@ -1,4 +1,4 @@
-function Steam(game, x, y) {
+function Steam(game, x, y, key) {
 
 	var enableCollision = true;
 
@@ -9,8 +9,17 @@ function Steam(game, x, y) {
 	console.log('function Steam');
 	Phaser.Sprite.call(this, game, x, y, 'steam');
 	game.add.existing(this);
-
-	this.animations.add('blow', [0, 1, 2, 4], 1, true);
+	console.log(key);
+	if(key == 'steam00'){
+		this.animations.add('blow00', [0, 1, 2, 4], 2, true);
+		console.log(key);
+	}
+	if(key == 'steam01'){
+		this.animations.add('blow01', [4, 2, 1, 0], 2, true);
+		console.log(key);
+	}
+	
+	
 
 	// add properties
 	game.physics.enable(this);
@@ -21,8 +30,10 @@ function Steam(game, x, y) {
 
 	//this.body.moves = false;
 
-	game.time.events.loop(1000, steamInt, this);
-	game.time.events.start();
+	// game.time.events.loop(1000, steamInt, this);
+	// game.time.events.start();
+	
+	
 }
 
 Steam.prototype = Object.create(Phaser.Sprite.prototype);
@@ -33,11 +44,29 @@ Steam.prototype.create = function() {
 },
 
 Steam.prototype.update = function() {
-	this.animations.play('blow');
+	
+	// if(this.key == 'steam00'){
+		this.animations.play('blow00');
+		this.animations.play('blow01');
+	// }
+	
+	if(this.animations.frame == 2){
+		this.body.setSize(16, 16, 4, 1000);
+		this.body.enable = false;
+	}
+	if(this.animations.frame == 4){
+		this.body.setSize(16, 16, 4, 1000);
+		this.body.enable = false;
+	}
+	if(this.animations.frame == 0 || this.animations.frame == 1){
+		this.body.setSize(16, 64, 4, 0);
+		this.body.enable = true;
+	}
+
 }
-function steamInt() {
+// function steamInt() {
 	// console.log('steamInt');
 	// this.visible = !this.visible;
-	this.body.enable = !this.body.enable;
+	// this.body.enable = !this.body.enable;
 	// this.destroy();
-}
+// }

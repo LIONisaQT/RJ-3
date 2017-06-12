@@ -13,8 +13,8 @@ var loadState = {
 		game.load.tilemap('level', 'flint1.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.tilemap('level22', 'level2.json', null, Phaser.Tilemap.TILED_JSON); // lvl 2
 		game.load.tilemap('level33', 'level3.json', null, Phaser.Tilemap.TILED_JSON); // lvl 3
-		game.load.spritesheet('player', 'Flint.png', 128, 128, 12); 
-		game.load.spritesheet('steam', 'steam_animation.png', 32, 64, 4);
+		game.load.spritesheet('player', 'Flint.png', 128, 128, 15); 
+		game.load.spritesheet('steam', 'steam_animation.png', 32, 64, 5);
 		game.load.spritesheet('leak', 'waterSheet.png', 64, 64, 6);
 		game.load.spritesheet('enemy', 'enemy.png', 496, 392, 2);
 		game.load.spritesheet('gameOverScreen', 'gameOver.png', 800, 640, 6);
