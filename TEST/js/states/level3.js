@@ -107,6 +107,7 @@ var lvl3= {
 		// world updates
 		this.waterLevel -= 0.05 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
+		this.waterBarHighlight.setPercent(this.waterLevel);
 
 		// debug
 		// game.debug.body(player);
