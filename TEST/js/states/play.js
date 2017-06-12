@@ -59,9 +59,9 @@ var playState= {
 
 		steamMachine = game.add.sprite(704, 640, 'steamMachine');
 		steams = game.add.group();
-		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32);
+		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32, 'steam00');
 		steams.add(steam0);
-		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
+		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32, 'steam01');
 		steams.add(steam1);
 
 		// leaks
@@ -109,8 +109,8 @@ var playState= {
 
 		// debug
 		// game.debug.body(player);
-		// game.debug.body(steam0);
-		// game.debug.body(steam1);
+		game.debug.body(steam0);
+		game.debug.body(steam1);
 
 		// states change
 		if (player.health == 0 || this.waterLevel <= 0) {

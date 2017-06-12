@@ -11,7 +11,7 @@ game = new Phaser.Game(800, 640, Phaser.AUTO);
 // Add all states using key value pairs
 game.state.add('load',loadState);
 game.state.add('menu',menuState);
-game.state.add('black', transitionState);
+// game.state.add('black', transitionState);
 game.state.add('play',playState);
 game.state.add('level2', lvl2);
 game.state.add('level3', lvl3);
