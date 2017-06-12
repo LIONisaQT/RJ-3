@@ -81,8 +81,13 @@ var lvl3= {
 		game.camera.follow(player, null, 0.1, 0.1);
 
 		// water bar
-		var barConfig = {x: 200, y: 60};
+		var barConfig = {x: 250, y: 60};
 		this.waterBar = new HealthBar(this.game, barConfig);
+		barConfig = {x: this.waterBar.x, y: this.waterBar.y - 4, height: 8, bar: {color: '#75aaff'}};
+		this.waterBarHighlight = new HealthBar(this.game, barConfig);
+		waterIcon = game.add.sprite(this.waterBar.x - 245, this.waterBar.y - 15, 'water');
+		waterIcon.scale.setTo(0.75);
+		waterIcon.fixedToCamera = true;
 
 	},
 
