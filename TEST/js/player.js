@@ -4,9 +4,10 @@ function Player(game, px, py) {
 	game.add.existing(this);
 
 	// add animations
-	this.animations.add('walkDown', [0, 1, 2, 3], 5, true);
-	this.animations.add('walkUp', [4, 5, 6, 7], 5, true);
-	this.animations.add('walkSide', [8, 9, 10, 11], 5, true);
+	this.animations.add('walkUp', [0, 1, 2, 3], 5, true);
+	this.animations.add('walkSide', [4, 5, 6, 7], 5, true);
+	this.animations.add('walkDown', [8, 9, 10, 11], 5, true);
+	this.animations.add('vacuuming', [12, 13, 14], 5, true);
 
 	// physics properties
 	game.physics.enable(this);
@@ -126,29 +127,47 @@ Player.prototype.update = function() {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
 			player.velocityNormal = 100;
 			enableHitbox("vacuum");
+			switch (this.lastKeyPressed) {
+				case 'down':
+					this.animations.frame = 12;
+					break;
+				case 'up':
+					this.animations.frame = 13;
+					break;
+				case 'right':
+					this.animations.frame = 14;
+					break;
+				case 'left':
+					this.animations.frame = 14;
+					this.scale.setTo(-this.scaleVal, this.scaleVal);
+					break;
+				default:
+			}
 		}
 
 		// movement
-		if (cursors.up.isDown) {
-			this.animations.play('walkUp');
-	    	this.body.velocity.y = -this.velocityNormal;      // up
-			this.lastKeyPressed = 'up';
-		} else if (cursors.down.isDown) {
-			this.animations.play('walkDown');
-	    	this.body.velocity.y = this.velocityNormal;       // down
-			this.lastKeyPressed = 'down';
-		} else if (cursors.left.isDown) {
-			this.scale.setTo(-player.scaleVal, player.scaleVal);
-			this.animations.play('walkSide');
-	    	this.body.velocity.x = -this.velocityNormal;      // left
-			this.lastKeyPressed = 'left';
-		} else if (cursors.right.isDown) {
-			this.scale.setTo(player.scaleVal, player.scaleVal);
-			this.animations.play('walkSide');
-	    	this.body.velocity.x = this.velocityNormal;       // right
-			this.lastKeyPressed = 'right';
-		} else {
-			this.animations.stop();
+		if (!game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+			if (cursors.up.isDown) {
+				this.animations.play('walkUp');
+		    	this.body.velocity.y = -this.velocityNormal;      // up
+				this.lastKeyPressed = 'up';
+			} else if (cursors.down.isDown) {
+				this.animations.play('walkDown');
+		    	this.body.velocity.y = this.velocityNormal;       // down
+				this.lastKeyPressed = 'down';
+			} else if (cursors.left.isDown) {
+				this.scale.setTo(-this.scaleVal, this.scaleVal);
+				this.animations.play('walkSide');
+		    	this.body.velocity.x = -this.velocityNormal;      // left
+				this.lastKeyPressed = 'left';
+			} else if (cursors.right.isDown) {
+				this.scale.setTo(this.scaleVal, this.scaleVal);
+				this.animations.play('walkSide');
+		    	this.body.velocity.x = this.velocityNormal;       // right
+				this.lastKeyPressed = 'right';
+			} else {
+				this.animations.stop();
+			}
 		}
 	}
 }
