@@ -85,9 +85,10 @@ var playState= {
 		game.camera.follow(player, null, 0.1, 0.1);
 
 		// water bar
-		var barConfig = {x: 200, y: 60};
+		var barConfig = {x: 250, y: 40};
 		this.waterBar = new HealthBar(this.game, barConfig);
-
+		barConfig = {x: 250, y: 36, height: 8, bar: {color: '#75aaff'}};
+		this.waterBarHighlight = new HealthBar(this.game, barConfig);
 	},
 
 	fadeCompleteWin: function() {
@@ -106,6 +107,7 @@ var playState= {
 		// world updates
 		this.waterLevel -= 0.05 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
+		this.waterBarHighlight.setPercent(this.waterLevel);
 
 		// debug
 		// game.debug.body(player);

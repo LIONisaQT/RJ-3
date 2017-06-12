@@ -29,8 +29,10 @@ function Player(game, px, py) {
 	this.vacuumAmmo = 0;
 
 	// health bar
-	var barConfig = {x: 200, y: 20};
+	var barConfig = {x: 250, y: 20, bar: {color: '#ff4f4f'}};
 	this.myHealthBar = new HealthBar(this.game, barConfig);
+	barConfig = {x: 250, y: 16, height: 8, bar: {color: '#fc7171'}};
+	this.myHealthBarHighlight = new HealthBar(this.game, barConfig);
 
 	// create group for player's atkHitboxes
 	this.atkHitboxes = game.add.group();
@@ -84,6 +86,7 @@ Player.prototype.update = function() {
 		this.gotHit = false;
 		this.damage(1);
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
+		this.myHealthBarHighlight.setPercent(this.health / this.maxHealth * 100);
 	}
 
 	if(this.body.x > 528 && this.text == false){
