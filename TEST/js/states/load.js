@@ -30,6 +30,6 @@ var loadState = {
 },
 	create: function(){
 		// go to menu state
-		game.state.start('level3');
+		game.state.start('menu');
 	},
 };
