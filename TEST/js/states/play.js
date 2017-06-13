@@ -5,7 +5,7 @@ var playState= {
 	},
 	create: function() {
 		this.t1 = false;
-		this.t2 = false;	
+		this.t2 = false;
 		this.t3 = false;
 		console.log('Play: create');
 		game.stage.setBackgroundColor('#4f2412');
@@ -33,33 +33,13 @@ var playState= {
 
 		cursors = game.input.keyboard.createCursorKeys();
 
-		// image of controls
-		// var tutorial = game.add.image(100, 500, 'instructions');
-		// tutorial.scale.setTo(4);
-
 		// pipes
 		pipes = game.add.group();
-		for (let i = 0; i < 14; i++) {
-			// pipe = new Pipes(game, 'pipe', game.rnd.integerInRange(22, 36) * 40, game.rnd.integerInRange(5, 11) * 40);
-			// pipes.add(pipe);
-		}
 
 		// oozes
 		oozes = game.add.group();
-		for (let i = 0; i < 14; i++) {
-			// ooze = new Ooze(game, 'ooze', game.rnd.integerInRange(22, 36) * 40, game.rnd.integerInRange(5, 11) * 40);
-			// oozes.add(ooze);
-		}
 
 		// steam
-		// steams = game.add.group();
-		// for (let i = 0; i < 1; i++) {
-		// 	steam = new Steam(game, 'steam', 220 + i * 120, 300);
-		// 	steams.add(steam);
-		// 	// steam = new Steam(game, 'steam', 220 + i * 120, 340);
-		// 	// steams.add(steam);
-		// }
-
 		steamMachine = game.add.sprite(704, 640, 'steamMachine');
 		game.physics.enable(steamMachine);
 
@@ -74,7 +54,8 @@ var playState= {
 		leak = new Leak(game, 2080, 416, this);
 		leaks.add(leak);
 
-		gate = new Gate(game, 2080, 800);
+		gate = new Gate(game, 2144, 800);
+		gate.scale.setTo(2);
 
 		// add enemy
 		enemies = game.add.group();
@@ -108,6 +89,7 @@ var playState= {
 	fadeCompleteLose: function() {
 		console.log("you lose");
 		this.snow.stop();
+		lastLevel = 'play';
 		game.state.start('gameOver');
 	},
 
@@ -123,26 +105,25 @@ var playState= {
 		this.sentence3.kill();
 	},
 
-
 	update: function() {
 		game.physics.arcade.collide(player, steamMachine);
+
 		// world updates
-		if(player.body.x > 528 && this.t1 == false){
+		if (player.body.x > 528 && this.t1 == false){
 			this.sentence = game.add.image(player.x-55,player.y-90, 'text2');
 			this.sentence.scale.setTo(0.35,0.35);
 			this.t1= true;
-			console.log('hi');
 			game.time.events.add(Phaser.Timer.SECOND * 2, this.fadePicture, this);
 		}
 
-		if(player.body.x > 1677 && this.t2 == false){
+		if (player.body.x > 1677 && this.t2 == false){
 			this.sentence2 = game.add.image(player.x-55,player.y-90, 'text4');
 			this.sentence2.scale.setTo(0.35,0.35);
 			this.t2 = true;
 			game.time.events.add(Phaser.Timer.SECOND * 2, this.fadePicture1, this);
 		}
 
-		if(player.body.x > 1677 && player.body.y > 650 && this.t3 == false){
+		if (player.body.x > 1677 && player.body.y > 650 && this.t3 == false){
 			this.sentence3 = game.add.image(player.x-55,player.y-90, 'text5');
 			this.sentence3.scale.setTo(0.35,0.35);
 			this.t3 = true;
@@ -152,11 +133,6 @@ var playState= {
 		this.waterLevel -= 0.05 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
 		this.waterBarHighlight.setPercent(this.waterLevel);
-
-		// debug
-		// game.debug.body(player);
-		game.debug.body(steam0);
-		game.debug.body(steam1);
 
 		// states change
 		if (player.health == 0 || this.waterLevel <= 0) {
@@ -169,8 +145,6 @@ var playState= {
 			this.camera.fade('#000000');
 			this.camera.onFadeComplete.add(this.fadeCompleteWin, this);
 			console.log("you win");
-			// this.transition.to('level2');
-			// game.state.start('level2');
 		}
 	},
 };

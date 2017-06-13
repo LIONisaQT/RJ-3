@@ -1,6 +1,5 @@
 function Ooze(game, key, distX, distY) {
 		// call to Phaser.Sprite
-
 		Phaser.Sprite.call(this, game, distX, distY, key);
 
 		game.add.existing(this);
@@ -17,7 +16,5 @@ Ooze.prototype = Object.create(Phaser.Sprite.prototype);
 Ooze.prototype.constructor = Ooze;
 
 Ooze.prototype.update = function() {
-	// game.physics.arcade.collide(this, player);
 	this.animations.play('poo');
-
 }

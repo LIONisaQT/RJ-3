@@ -11,8 +11,6 @@ function Leak(game, distX, distY, st) {
     this.body.collideWorldBounds = true;
     this.body.immovable = true;
     this.body.enable = true;
-    // this.scale.setTo(3);
-    // this.velocityNormal = 200;
     this.state = st;
 }
 
@@ -22,7 +20,6 @@ Leak.prototype.constructor = Leak;
 Leak.prototype.update = function() {
     game.physics.arcade.overlap(this, player.basicAtk, function() {fixLeak(this, this.state);}, null, this);
     this.animations.play('flow');
-	// game.physics.arcade.collide(this, player);
 }
 
 function fixLeak(l, s) {

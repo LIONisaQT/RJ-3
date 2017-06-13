@@ -16,5 +16,4 @@ Pipes.prototype = Object.create(Phaser.Sprite.prototype);
 Pipes.prototype.constructor = Pipes;
 
 Pipes.prototype.update = function() {
-	// game.physics.arcade.collide(this, player);
 }

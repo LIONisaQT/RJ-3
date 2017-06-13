@@ -23,7 +23,6 @@ var loadState = {
 		game.load.spritesheet('ooze', 'oozeSheet.png', 64,64,6);
 		game.load.spritesheet('gameOverScreen', 'gameOver.png', 800, 640, 6);
 		game.load.image('tiles', 'wallFloor.png');
-		// game.load.image('ground', 'ground.png');
 		game.load.image('playbutton', 'playButton2.png');
 		game.load.spritesheet('text1', 'text1.png',800,118);
 		game.load.image('City', 'shitty.png');

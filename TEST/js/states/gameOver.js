@@ -2,9 +2,6 @@ var gameOver= {
 	create: function(){
 		this.bg = game.add.sprite(0, 0, 'gameOverScreen');
 		this.bg.animations.add('background', [0, 1, 2, 3, 4, 5], 2, false);
-		//  Texts on the Menu Screen
-		// var gameOverLabel = game.add.text(0, 0, 'Game over!',{font:'25px Comic', fill:'#ffffff'});
-		// var startLabel = game.add.text(0, 80, 'Press R to Restart', {font:'25px Comic', fill:'#ffffff'});
 
 		// Listener for R key pressed
 		var rkey= game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
@@ -18,15 +15,18 @@ var gameOver= {
 	},
 
 	update: function(){
-
 		if (this.bg.animations.frame == 5) {
 			this.bg.animations.paused = true;
 		}
-
 	},
 
 	restart: function (){
 		this.pp.stop();
-		game.state.start('menu');
+		if (lastLevel != 'level4') {
+			game.state.start(lastLevel);
+		}
+		else {
+			game.state.start('menu');
+		}
 	},
 };

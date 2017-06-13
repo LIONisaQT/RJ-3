@@ -1,4 +1,4 @@
-var cutScene =  {
+var cutScene = {
 create: function(){
 
 	background = this.add.tileSprite(0,200,800,400,'City');
@@ -18,17 +18,17 @@ update: function(){
 	background.tilePosition.x -= 1;
 	this.sentence.animations.play('firstrow');
 
-	if(this.sentence.animations.frame == 3){
+	if (this.sentence.animations.frame == 3) {
  		this.sentence.animations.paused = true;
 	}
-	if(this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
+	if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
 		this.shrine.stop();
 		this.start();
 		//this.sentence.animations.play('secondrow');
 	}
 },
 
- // go to play state
+	// go to play state
 	start: function (){
 		game.state.start('play');
 	},

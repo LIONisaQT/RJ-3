@@ -34,16 +34,8 @@ var lvl3= {
 		enemies = game.add.group();
 		leaks = game.add.group();
 
-		// image of controls
-		// var tutorial = game.add.image(100, 500, 'instructions');
-		// tutorial.scale.setTo(4);
-
 		// pipes
 		pipes = game.add.group();
-		for (let i = 0; i < 14; i++) {
-			// pipe = new Pipes(game, 'pipe', game.rnd.integerInRange(22, 36) * 40, game.rnd.integerInRange(5, 11) * 40);
-			// pipes.add(pipe);
-		}
 
 		// oozes
 		oozes = game.add.group();
@@ -53,23 +45,15 @@ var lvl3= {
 		oozes.add(ooze1);
 		oozes.add(ooze2);
 		oozes.add(ooze3);
-	
+
 
 		// steam
-		// steams = game.add.group();
-		// for (let i = 0; i < 1; i++) {
-		// 	steam = new Steam(game, 'steam', 220 + i * 120, 300);
-		// 	steams.add(steam);
-		// 	// steam = new Steam(game, 'steam', 220 + i * 120, 340);
-		// 	// steams.add(steam);
-		// }
-
 		steamMachine = game.add.sprite(960, 1024, 'steamMachine');
 		steams = game.add.group();
 
 		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y +96, 'steam00');		// bot left steam
 		steam0.rotation = 9.5;
-		steams.add(steam0);	
+		steams.add(steam0);
 
 		steam00 = new Steam(game, steamMachine.x + 32, steamMachine.y -32, 'steam01');		// top left steam
 		steams.add(steam00);
@@ -85,7 +69,7 @@ var lvl3= {
 		steamMachine1 = game.add.sprite(1152, 1024, 'steamMachine');
 		steam2 = new Steam(game, steamMachine1.x + 32, steamMachine1.y +96, 'steam00');		// bot left steam
 		steam2.rotation = 9.5;
-		steams.add(steam2);	
+		steams.add(steam2);
 
 		steam22 = new Steam(game, steamMachine1.x + 32, steamMachine1.y -32, 'steam01');		// top left steam
 		steams.add(steam22);
@@ -107,7 +91,7 @@ var lvl3= {
 		steamMachine2 = game.add.sprite(1344, 1024, 'steamMachine');
 		steam4 = new Steam(game, steamMachine2.x + 32, steamMachine2.y +96, 'steam00');		// bot left steam
 		steam4.rotation = 9.5;
-		steams.add(steam4);	
+		steams.add(steam4);
 
 		steam44 = new Steam(game, steamMachine2.x + 32, steamMachine2.y -32, 'steam01');		// top left steam
 		steams.add(steam44);
@@ -128,23 +112,15 @@ var lvl3= {
 		game.physics.enable(steamMachine2);
 		steamMachine2.body.immovable = true;
 
-
 		// leaks
-		 leak = new Leak(game, 352, 480, this);
-		 leak1 = new Leak(game, 928, 992, this);
-		 //console.log(player.body.x);
-		 //console.log(player.body.y);
-		// leak2 = new Leak(game, 768, 1440);
+		leak = new Leak(game, 352, 480, this);
+		leak1 = new Leak(game, 928, 992, this);
 
-		gate = new Gate(game, 1664, 800);
-
-		// add enemy
-		// enemy1 = new Enemy(game, 1952, 864);
-		// enemy2 = new Enemy(game, 1952, 800);
-		// enemy3 = new Enemy(game, 1952, 736);
+		gate = new Gate(game, 1664, 768);
+		gate.scale.setTo(4);
 
 		// add player
-		player = new Player(game,448,1088, 'player');
+		player = new Player(game, 448, 1088);
 
 		game.camera.follow(player, null, 0.1, 0.1);
 
@@ -156,7 +132,6 @@ var lvl3= {
 		waterIcon = game.add.sprite(this.waterBar.x - 245, this.waterBar.y - 15, 'water');
 		waterIcon.scale.setTo(0.75);
 		waterIcon.fixedToCamera = true;
-
 	},
 
 	fadeCompleteWin: function() {
@@ -173,12 +148,10 @@ var lvl3= {
 	},
 
 	update: function() {
-			// this.camera.fade('#000000');
-			// this.camera.onFadeComplete.add(this.fadeComplete, this);
-
 		game.physics.arcade.collide(player, steamMachine);
 		game.physics.arcade.collide(player, steamMachine1);
 		game.physics.arcade.collide(player, steamMachine2);
+
 		// world updates
 		this.waterLevel -= 0.02 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
@@ -196,6 +169,7 @@ var lvl3= {
 		if (player.health == 0 || this.waterLevel <= 0) {
 			this.camera.fade('#000000');
 			this.camera.onFadeComplete.add(this.fadeCompleteLose, this);
+			lastLevel = 'level3'
 			console.log("you lose");
 		}
 
@@ -203,8 +177,6 @@ var lvl3= {
 			this.camera.fade('#000000');
 			this.camera.onFadeComplete.add(this.fadeCompleteWin, this);
 			console.log("you win");
-			// this.transition.to('level2');
-			// game.state.start('level2');
 		}
 	},
 };

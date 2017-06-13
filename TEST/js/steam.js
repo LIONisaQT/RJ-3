@@ -18,8 +18,6 @@ function Steam(game, x, y, key) {
 		this.animations.add('blow01', [4, 2, 1, 0], 2, true);
 		console.log(key);
 	}
-	
-	
 
 	// add properties
 	game.physics.enable(this);
@@ -27,13 +25,6 @@ function Steam(game, x, y, key) {
 	this.body.immovable = true;
 	this.body.enable = true;
 	this.body.setSize(20, 64, 4, 0);
-
-	//this.body.moves = false;
-
-	// game.time.events.loop(1000, steamInt, this);
-	// game.time.events.start();
-	
-	
 }
 
 Steam.prototype = Object.create(Phaser.Sprite.prototype);
@@ -44,12 +35,12 @@ Steam.prototype.create = function() {
 },
 
 Steam.prototype.update = function() {
-	
+
 	// if(this.key == 'steam00'){
 		this.animations.play('blow00');
 		this.animations.play('blow01');
 	// }
-	
+
 	if(this.animations.frame == 2){
 		this.body.setSize(16, 16, 4, 1000);
 		this.body.enable = false;
@@ -64,9 +55,3 @@ Steam.prototype.update = function() {
 	}
 
 }
-// function steamInt() {
-	// console.log('steamInt');
-	// this.visible = !this.visible;
-	// this.body.enable = !this.body.enable;
-	// this.destroy();
-// }

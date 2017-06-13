@@ -4,6 +4,7 @@ var layer;
 var mapLayer;
 var cursors;
 var scrollTrigger = false;
+var lastLevel;
 
 // Create my Phaser.Game object
 game = new Phaser.Game(800, 640, Phaser.AUTO);
