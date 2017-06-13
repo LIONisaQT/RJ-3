@@ -61,6 +61,8 @@ var playState= {
 		// }
 
 		steamMachine = game.add.sprite(704, 640, 'steamMachine');
+		game.physics.enable(steamMachine);
+
 		steams = game.add.group();
 		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32, 'steam00');
 		steams.add(steam0);
@@ -123,6 +125,7 @@ var playState= {
 
 
 	update: function() {
+		game.physics.arcade.collide(player, steamMachine);
 		// world updates
 		if(player.body.x > 528 && this.t1 == false){
 			this.sentence = game.add.image(player.x-55,player.y-90, 'text2');

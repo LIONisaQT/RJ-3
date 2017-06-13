@@ -30,6 +30,10 @@ var lvl3= {
 
 		cursors = game.input.keyboard.createCursorKeys();
 
+		steams = game.add.group();
+		enemies = game.add.group();
+		leaks = game.add.group();
+
 		// image of controls
 		// var tutorial = game.add.image(100, 500, 'instructions');
 		// tutorial.scale.setTo(4);
@@ -43,10 +47,13 @@ var lvl3= {
 
 		// oozes
 		oozes = game.add.group();
-		for (let i = 0; i < 14; i++) {
-			// ooze = new Ooze(game, 'ooze', game.rnd.integerInRange(22, 36) * 40, game.rnd.integerInRange(5, 11) * 40);
-			// oozes.add(ooze);
-		}
+		ooze1 = new Ooze(game, 'ooze', 160, 670);
+		ooze2 = new Ooze(game, 'ooze', 160, 570);
+		ooze3 = new Ooze(game, 'ooze', 160, 470);
+		oozes.add(ooze1);
+		oozes.add(ooze2);
+		oozes.add(ooze3);
+	
 
 		// steam
 		// steams = game.add.group();
@@ -57,9 +64,70 @@ var lvl3= {
 		// 	// steams.add(steam);
 		// }
 
-		steamMachine = game.add.sprite(704, 640, 'steamMachine');
-		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32);
-		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
+		steamMachine = game.add.sprite(960, 1024, 'steamMachine');
+		steams = game.add.group();
+
+		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y +96, 'steam00');		// bot left steam
+		steam0.rotation = 9.5;
+		steams.add(steam0);	
+
+		steam00 = new Steam(game, steamMachine.x + 32, steamMachine.y -32, 'steam01');		// top left steam
+		steams.add(steam00);
+
+		// steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y +96, 'steam01');		// bot right steam
+		// steam1.rotation = 9.5;
+		// steams.add(steam1);
+
+		// steam11 = new Steam(game, steamMachine.x + 96, steamMachine.y -32, 'steam00');		//  top right steam
+		// steams.add(steam11);
+
+
+		steamMachine1 = game.add.sprite(1152, 1024, 'steamMachine');
+		steam2 = new Steam(game, steamMachine1.x + 32, steamMachine1.y +96, 'steam00');		// bot left steam
+		steam2.rotation = 9.5;
+		steams.add(steam2);	
+
+		steam22 = new Steam(game, steamMachine1.x + 32, steamMachine1.y -32, 'steam01');		// top left steam
+		steams.add(steam22);
+
+		steam3 = new Steam(game, steamMachine1.x + 96, steamMachine1.y +96, 'steam01');		// bot right steam
+		steam3.rotation = 9.5;
+		steams.add(steam3);
+
+		// steam33 = new Steam(game, steamMachine1.x + 96, steamMachine1.y -32, 'steam00');		//  top right steam
+		// steams.add(steam33);
+
+		game.physics.enable(steamMachine);
+		steamMachine.body.immovable = true;
+
+		game.physics.enable(steamMachine1);
+		steamMachine1.body.immovable = true;
+
+
+		steamMachine2 = game.add.sprite(1344, 1024, 'steamMachine');
+		steam4 = new Steam(game, steamMachine2.x + 32, steamMachine2.y +96, 'steam00');		// bot left steam
+		steam4.rotation = 9.5;
+		steams.add(steam4);	
+
+		steam44 = new Steam(game, steamMachine2.x + 32, steamMachine2.y -32, 'steam01');		// top left steam
+		steams.add(steam44);
+
+		steam5 = new Steam(game, steamMachine2.x + 96, steamMachine2.y +96, 'steam01');		// bot right steam
+		steam5.rotation = 9.5;
+		steams.add(steam5);
+
+		steam55 = new Steam(game, steamMachine2.x + 96, steamMachine2.y -32, 'steam00');		//  top right steam
+		steams.add(steam55);
+
+		game.physics.enable(steamMachine);
+		steamMachine.body.immovable = true;
+
+		game.physics.enable(steamMachine1);
+		steamMachine1.body.immovable = true;
+
+		game.physics.enable(steamMachine2);
+		steamMachine2.body.immovable = true;
+
 
 		// leaks
 		 leak = new Leak(game, 352, 480, this);
@@ -95,6 +163,7 @@ var lvl3= {
 		console.log("you win");
 		this.mc.stop();
 		game.state.start('level4');
+
 	},
 
 	fadeCompleteLose: function() {
@@ -104,8 +173,14 @@ var lvl3= {
 	},
 
 	update: function() {
+			// this.camera.fade('#000000');
+			// this.camera.onFadeComplete.add(this.fadeComplete, this);
+
+		game.physics.arcade.collide(player, steamMachine);
+		game.physics.arcade.collide(player, steamMachine1);
+		game.physics.arcade.collide(player, steamMachine2);
 		// world updates
-		this.waterLevel -= 0.05 * this.totalLeaks;
+		this.waterLevel -= 0.02 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
 		this.waterBarHighlight.setPercent(this.waterLevel);
 

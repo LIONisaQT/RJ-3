@@ -15,7 +15,7 @@ function Player(game, px, py) {
 	this.scale.setTo(this.scaleVal, this.scaleVal);
 	this.body.setSize(60, 50, 35, 60);
 	this.anchor.set(0.5, 0.5);
-	this.defaultVelocity = 800;
+	this.defaultVelocity = 300;
     this.velocityNormal = this.defaultVelocity;
 	this.body.collideWorldBounds = true;
 
@@ -88,7 +88,7 @@ Player.prototype.update = function() {
 	if (this.gotHit) {
 		stunned();
 		this.gotHit = false;
-		this.damage(1);
+		this.damage(0.5);
 		this.myHealthBar.setPercent(this.health / this.maxHealth * 100);
 		this.myHealthBarHighlight.setPercent(this.health / this.maxHealth * 100);
 	}

@@ -27,7 +27,7 @@ var lvl4444= {
 		game.camera.deadzone = new Phaser.Rectangle(100, 100, 700, 500);
 
 		// stage properties
-		this.totalLeaks = 3;
+		this.totalLeaks = 10;
 		this.waterLevel = 100;
 
 		cursors = game.input.keyboard.createCursorKeys();
@@ -59,9 +59,9 @@ var lvl4444= {
 		// 	// steams.add(steam);
 		// }
 
-		steamMachine = game.add.sprite(704, 640, 'steamMachine');
-		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32);
-		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
+		steamMachine = game.add.sprite(704, 2000, 'steamMachine');
+		// steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y - 32);
+		// steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
 
 		// leaks
 		 leaks = game.add.group();
@@ -69,8 +69,33 @@ var lvl4444= {
 		 leaks.add(leak);
 		 leak1 = new Leak(game, 928, 992,this);
 		 leaks.add(leak1);
-		 leak2 = new Leak(game, 1408, 832,this);
+		 leak2 = new Leak(game, 1408, 402,this);
 		 leaks.add(leak2);
+		 leak = new Leak(game, 604, 600,this);
+		 leaks.add(leak);
+		 leak3 = new Leak(game, 1028, 992,this);
+		 leaks.add(leak3);
+		 leak4 = new Leak(game, 1308, 802,this);
+		 leaks.add(leak4);
+		 leak5 = new Leak(game, 928, 692,this);
+		 leaks.add(leak5);
+		 leak6 = new Leak(game, 808, 432,this);
+		 leaks.add(leak6);
+		 leak7 = new Leak(game, 648, 342,this);
+		 leaks.add(leak7);
+		 leak8 = new Leak(game, 1308, 632,this);
+		 leaks.add(leak8);
+		 leak9 = new Leak(game, 1308, 402,this);
+		 leaks.add(leak9);
+		 leak10 = new Leak(game, 1508, 822,this);
+		 leaks.add(leak10);
+
+		// oozes
+		oozes = game.add.group();
+		for (let i = 0; i < 30; i++) {
+			ooze = new Ooze(game, 'ooze', game.rnd.integerInRange(10, 30) * 64, game.rnd.integerInRange(2, 20) * 64);
+			oozes.add(ooze);
+		}
 		 //console.log(player.body.x);
 		 //console.log(player.body.y);
 		// leak2 = new Leak(game, 768, 1440);
@@ -81,9 +106,11 @@ var lvl4444= {
 		// enemy1 = new Enemy(game, 1952, 864);
 		// enemy2 = new Enemy(game, 1952, 800);
 		// enemy3 = new Enemy(game, 1952, 736);
-
+		steams = game.add.group();
+		enemies = game.add.group();
+		leaks = game.add.group();
 		// add player
-		player = new Player(game,448,1088, 'player');
+		player = new Player(game,64,150, 'player');
 
 		game.camera.follow(player, null, 0.1, 0.1);
 
@@ -92,111 +119,111 @@ var lvl4444= {
 		this.waterBar = new HealthBar(this.game, barConfig);
 
 	},
-	leakFix: function(player, leak) {
-		leak.kill();
-		this.totalLeaks -= 1;
-	},
+	// leakFix: function(player, leak) {
+	// 	leak.kill();
+	// 	this.totalLeaks -= 1;
+	// },
 
-	leakFix1: function(player, leak1) {
-		leak1.kill();
-		this.totalLeaks -= 1;
-	},
+	// leakFix1: function(player, leak1) {
+	// 	leak1.kill();
+	// 	this.totalLeaks -= 1;
+	// },
 
-	leakFix2: function(player, leak2) {
-		leak2.kill();
-		this.totalLeaks -= 1;
-	},
+	// leakFix2: function(player, leak2) {
+	// 	leak2.kill();
+	// 	this.totalLeaks -= 1;
+	// },
 
-	checkOverlap: function() {
-		if (game.physics.arcade.overlap(enemy1, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	checkOverlap2: function() {
-		if (game.physics.arcade.overlap(enemy2, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	checkOverlap3: function() {
-		if (game.physics.arcade.overlap(enemy3, player.vacuum, null, null, this)){
-			return false;
-		}
-	},
-	killEnemy1: function(){
-		if (player.body.x < enemy1.body.x) {
-			enemy1.body.x -= 1;
-			if(enemy1.body.x < player.vacuum.body.x + 10) {
-				enemy1.kill();
-			}
-		} else if (player.body.x > enemy1.body.x) {
-			enemy1.body.x += 1;
-			if(enemy1.body.x + enemy1.body.width > player.vacuum.body.x + 90) {
-				enemy1.kill();
-			}
-		}
+	// checkOverlap: function() {
+	// 	if (game.physics.arcade.overlap(enemy1, player.vacuum, null, null, this)){
+	// 		return false;
+	// 	}
+	// },
+	// checkOverlap2: function() {
+	// 	if (game.physics.arcade.overlap(enemy2, player.vacuum, null, null, this)){
+	// 		return false;
+	// 	}
+	// },
+	// checkOverlap3: function() {
+	// 	if (game.physics.arcade.overlap(enemy3, player.vacuum, null, null, this)){
+	// 		return false;
+	// 	}
+	// },
+	// killEnemy1: function(){
+	// 	if (player.body.x < enemy1.body.x) {
+	// 		enemy1.body.x -= 1;
+	// 		if(enemy1.body.x < player.vacuum.body.x + 10) {
+	// 			enemy1.kill();
+	// 		}
+	// 	} else if (player.body.x > enemy1.body.x) {
+	// 		enemy1.body.x += 1;
+	// 		if(enemy1.body.x + enemy1.body.width > player.vacuum.body.x + 90) {
+	// 			enemy1.kill();
+	// 		}
+	// 	}
 
-		if (player.body.y > enemy1.body.y) {
-			enemy1.body.y += 1;
-			if(enemy1.body.y + enemy1.body.height > player.vacuum.body.y + 90) {
-				enemy1.kill();
-			}
-		} else if (player.body.y < enemy1.body.y) {
-			enemy1.body.y -= 1;
-			if(enemy1.body.y < player.vacuum.body.y + 10) {
-				enemy1.kill();
-			}
-		}
-	},
-	killEnemy2: function(){
-		if (player.body.x < enemy2.body.x) {
-			enemy2.body.x -= 1;
-			if(enemy2.body.x < player.vacuum.body.x + 10) {
-				enemy2.kill();
-			}
-		} else if (player.body.x > enemy2.body.x) {
-			enemy2.body.x += 1;
-			if(enemy2.body.x + enemy2.body.width > player.vacuum.body.x + 90) {
-				enemy2.kill();
-			}
-		}
+	// 	if (player.body.y > enemy1.body.y) {
+	// 		enemy1.body.y += 1;
+	// 		if(enemy1.body.y + enemy1.body.height > player.vacuum.body.y + 90) {
+	// 			enemy1.kill();
+	// 		}
+	// 	} else if (player.body.y < enemy1.body.y) {
+	// 		enemy1.body.y -= 1;
+	// 		if(enemy1.body.y < player.vacuum.body.y + 10) {
+	// 			enemy1.kill();
+	// 		}
+	// 	}
+	// },
+	// killEnemy2: function(){
+	// 	if (player.body.x < enemy2.body.x) {
+	// 		enemy2.body.x -= 1;
+	// 		if(enemy2.body.x < player.vacuum.body.x + 10) {
+	// 			enemy2.kill();
+	// 		}
+	// 	} else if (player.body.x > enemy2.body.x) {
+	// 		enemy2.body.x += 1;
+	// 		if(enemy2.body.x + enemy2.body.width > player.vacuum.body.x + 90) {
+	// 			enemy2.kill();
+	// 		}
+	// 	}
 
-		if (player.body.y > enemy2.body.y) {
-			enemy2.body.y += 1;
-			if(enemy2.body.y + enemy2.body.height > player.vacuum.body.y + 90) {
-				enemy2.kill();
-			}
-		} else if (player.body.y < enemy2.body.y) {
-			enemy2.body.y -= 1;
-			if(enemy2.body.y < player.vacuum.body.y + 10) {
-				enemy2.kill();
-			}
-		}
-	},
-	killEnemy3: function(){
-		if (player.body.x < enemy3.body.x) {
-			enemy3.body.x -= 1;
-			if(enemy3.body.x < player.vacuum.body.x + 10) {
-				enemy3.kill();
-			}
-		} else if (player.body.x > enemy3.body.x) {
-			enemy3.body.x += 1;
-			if(enemy3.body.x + enemy3.body.width > player.vacuum.body.x + 90) {
-				enemy3.kill();
-			}
-		}
+	// 	if (player.body.y > enemy2.body.y) {
+	// 		enemy2.body.y += 1;
+	// 		if(enemy2.body.y + enemy2.body.height > player.vacuum.body.y + 90) {
+	// 			enemy2.kill();
+	// 		}
+	// 	} else if (player.body.y < enemy2.body.y) {
+	// 		enemy2.body.y -= 1;
+	// 		if(enemy2.body.y < player.vacuum.body.y + 10) {
+	// 			enemy2.kill();
+	// 		}
+	// 	}
+	// },
+	// killEnemy3: function(){
+	// 	if (player.body.x < enemy3.body.x) {
+	// 		enemy3.body.x -= 1;
+	// 		if(enemy3.body.x < player.vacuum.body.x + 10) {
+	// 			enemy3.kill();
+	// 		}
+	// 	} else if (player.body.x > enemy3.body.x) {
+	// 		enemy3.body.x += 1;
+	// 		if(enemy3.body.x + enemy3.body.width > player.vacuum.body.x + 90) {
+	// 			enemy3.kill();
+	// 		}
+	// 	}
 
-		if (player.body.y > enemy3.body.y) {
-			enemy3.body.y += 1;
-			if(enemy3.body.y + enemy3.body.height > player.vacuum.body.y + 90) {
-				enemy3.kill();
-			}
-		} else if (player.body.y < enemy3.body.y) {
-			enemy3.body.y -= 1;
-			if(enemy3.body.y < player.vacuum.body.y + 10) {
-				enemy3.kill();
-			}
-		}
-	},
+	// 	if (player.body.y > enemy3.body.y) {
+	// 		enemy3.body.y += 1;
+	// 		if(enemy3.body.y + enemy3.body.height > player.vacuum.body.y + 90) {
+	// 			enemy3.kill();
+	// 		}
+	// 	} else if (player.body.y < enemy3.body.y) {
+	// 		enemy3.body.y -= 1;
+	// 		if(enemy3.body.y < player.vacuum.body.y + 10) {
+	// 			enemy3.kill();
+	// 		}
+	// 	}
+	// },
 
 	fadeCompleteWin: function() {
 		console.log("you win");
@@ -215,7 +242,7 @@ var lvl4444= {
 
 	update: function() {
 
-		if(player.body.x > 528 && this.tt1 == false){
+		if(player.body.x > 320 && this.tt1 == false){
 			this.sentencess = game.add.image(player.x-55,player.y-90, 'finaltext');
 			this.sentencess.scale.setTo(0.35,0.35);
 			this.tt1= true;
@@ -225,12 +252,12 @@ var lvl4444= {
 
 		// player and map collisions
 		game.physics.arcade.collide(player, collideLayer1);
-		game.physics.arcade.collide(player, enemy1, knockback, this.checkOverlap, this);
-		game.physics.arcade.collide(player, enemy2, knockback, this.checkOverlap2, this);
-		game.physics.arcade.collide(player, enemy3, knockback, this.checkOverlap3, this);
-		game.physics.arcade.collide(player, pipes);
-		game.physics.arcade.collide(player, steam0, knockback, null, this);
-		game.physics.arcade.collide(player, steam1, knockback, null, this);
+		// game.physics.arcade.collide(player, enemy1, knockback, this.checkOverlap, this);
+		// game.physics.arcade.collide(player, enemy2, knockback, this.checkOverlap2, this);
+		// game.physics.arcade.collide(player, enemy3, knockback, this.checkOverlap3, this);
+		// game.physics.arcade.collide(player, pipes);
+		// game.physics.arcade.collide(player, steam0, knockback, null, this);
+		// game.physics.arcade.collide(player, steam1, knockback, null, this);
 		if (game.physics.arcade.overlap(oozes, player, null, null, this)) {
 			player.velocityNormal = 100;
 			player.body.velocity.x = 1000; // pushes player (like river), remove later
@@ -246,55 +273,55 @@ var lvl4444= {
 
 		// player attack collisions
 		// enemy1
-		if (game.physics.arcade.overlap(enemy1, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy1.kill();
-		}
-		if (game.physics.arcade.overlap(enemy1, player.vacuum, this.killEnemy1, null, this)) {
-			if (player.x < enemy1.x) {
-				enemy1.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
+		// if (game.physics.arcade.overlap(enemy1, player.basicAtk, null, null, this)) {
+		// 	console.log("hit");
+		// 	enemy1.kill();
+		// }
+		// if (game.physics.arcade.overlap(enemy1, player.vacuum, this.killEnemy1, null, this)) {
+		// 	if (player.x < enemy1.x) {
+		// 		enemy1.x -= 5;
+		// 	}
+		// 	// console.log('enemy getting pulled');
+		// } else {
+		// 	// enemy1.body.velocity.x = 0;
+		// 	// console.log('enemy not getting pulled');
+		// }
 
-		// enemy2
-		if (game.physics.arcade.overlap(enemy2, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy2.kill();
-		}
-		if (game.physics.arcade.overlap(enemy2, player.vacuum, this.killEnemy2, null, this)) {
-			if (player.x < enemy2.x) {
-				enemy2.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
+		// // enemy2
+		// if (game.physics.arcade.overlap(enemy2, player.basicAtk, null, null, this)) {
+		// 	console.log("hit");
+		// 	enemy2.kill();
+		// }
+		// if (game.physics.arcade.overlap(enemy2, player.vacuum, this.killEnemy2, null, this)) {
+		// 	if (player.x < enemy2.x) {
+		// 		enemy2.x -= 5;
+		// 	}
+		// 	// console.log('enemy getting pulled');
+		// } else {
+		// 	// enemy1.body.velocity.x = 0;
+		// 	// console.log('enemy not getting pulled');
+		// }
 
-		// enemy3
-		if (game.physics.arcade.overlap(enemy3, player.basicAtk, null, null, this)) {
-			console.log("hit");
-			enemy3.kill();
-		}
-		if (game.physics.arcade.overlap(enemy3, player.vacuum, this.killEnemy3, null, this)) {
-			if (player.x < enemy3.x) {
-				enemy3.x -= 5;
-			}
-			// console.log('enemy getting pulled');
-		} else {
-			// enemy1.body.velocity.x = 0;
-			// console.log('enemy not getting pulled');
-		}
+		// // enemy3
+		// if (game.physics.arcade.overlap(enemy3, player.basicAtk, null, null, this)) {
+		// 	console.log("hit");
+		// 	enemy3.kill();
+		// }
+		// if (game.physics.arcade.overlap(enemy3, player.vacuum, this.killEnemy3, null, this)) {
+		// 	if (player.x < enemy3.x) {
+		// 		enemy3.x -= 5;
+		// 	}
+		// 	// console.log('enemy getting pulled');
+		// } else {
+		// 	// enemy1.body.velocity.x = 0;
+		// 	// console.log('enemy not getting pulled');
+		// }
 
 		game.physics.arcade.collide(player.basicAtk, leak, this.leakFix, null, this);
 		game.physics.arcade.collide(player.basicAtk, leak1, this.leakFix, null, this);
 		game.physics.arcade.collide(player.basicAtk, leak2, this.leakFix, null, this);
 		// world updates
-		this.waterLevel -= 0.01 * this.totalLeaks;
+		this.waterLevel -= 0.03 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
 
 		// debug

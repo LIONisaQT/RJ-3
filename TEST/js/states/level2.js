@@ -55,12 +55,46 @@ var lvl2= {
 		// 	steams.add(steam);
 		// 	// steam = new Steam(game, 'steam', 220 + i * 120, 340);
 		// 	// steams.add(steam);
-		// }
-
+			// }
 		steamMachine = game.add.sprite(704, 1280, 'steamMachine');
-		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y -32);
-		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y - 32);
-		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y + 96);
+		steams = game.add.group();
+
+		steam0 = new Steam(game, steamMachine.x + 32, steamMachine.y +96, 'steam00');		// bot left steam
+		steam0.rotation = 9.5;
+		steams.add(steam0);	
+
+		steam00 = new Steam(game, steamMachine.x + 32, steamMachine.y -32, 'steam01');		// top left steam
+		steams.add(steam00);
+
+		steam1 = new Steam(game, steamMachine.x + 96, steamMachine.y +96, 'steam01');		// bot right steam
+		steam1.rotation = 9.5;
+		steams.add(steam1);
+
+		steam11 = new Steam(game, steamMachine.x + 96, steamMachine.y -32, 'steam00');		//  top right steam
+		steams.add(steam11);
+
+
+		steamMachine1 = game.add.sprite(704,190, 'steamMachine');
+		steam2 = new Steam(game, steamMachine1.x + 32, steamMachine1.y +96, 'steam00');		// bot left steam
+		steam2.rotation = 9.5;
+		steams.add(steam2);	
+
+		steam22 = new Steam(game, steamMachine1.x + 32, steamMachine1.y -32, 'steam01');		// top left steam
+		steams.add(steam22);
+
+		steam3 = new Steam(game, steamMachine1.x + 96, steamMachine1.y +96, 'steam01');		// bot right steam
+		steam3.rotation = 9.5;
+		steams.add(steam3);
+
+		steam33 = new Steam(game, steamMachine1.x + 96, steamMachine1.y -32, 'steam00');		//  top right steam
+		steams.add(steam33);
+
+
+		game.physics.enable(steamMachine);
+		steamMachine.body.immovable = true;
+
+		game.physics.enable(steamMachine1);
+		steamMachine1.body.immovable = true;
 
 		// leaks
 		leaks = game.add.group();
@@ -77,6 +111,7 @@ var lvl2= {
 		// enemy1 = new Enemy(game, 1952, 864);
 		// enemy2 = new Enemy(game, 1952, 800);
 		// enemy3 = new Enemy(game, 1952, 736);
+		
 
 		// add player
 		player = new Player(game,768,768, 'player');
@@ -108,6 +143,8 @@ var lvl2= {
 	},
 
 	update: function() {
+		game.physics.arcade.collide(player, steamMachine);
+		game.physics.arcade.collide(player, steamMachine1);
 		// world updates
 		this.waterLevel -= 0.02 * this.totalLeaks;
 		this.waterBar.setPercent(this.waterLevel);
@@ -122,6 +159,8 @@ var lvl2= {
 		// game.debug.spriteBounds(steam4);
 
 		// states change
+		console.log(player.health);
+		console.log(this.waterLevel);
 		if (player.health == 0 || this.waterLevel <= 0) {
 			this.camera.fade('#000000');
 			this.camera.onFadeComplete.add(this.fadeCompleteLose, this);

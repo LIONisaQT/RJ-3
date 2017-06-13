@@ -20,6 +20,7 @@ var loadState = {
 		game.load.spritesheet('steam', 'steam_animation.png', 32, 64, 5);
 		game.load.spritesheet('leak', 'waterSheet.png', 64, 64, 6);
 		game.load.spritesheet('enemy', 'enemy.png', 496, 392, 2);
+		game.load.spritesheet('ooze', 'oozeSheet.png', 64,64,6);
 		game.load.spritesheet('gameOverScreen', 'gameOver.png', 800, 640, 6);
 		game.load.image('tiles', 'wallFloor.png');
 		// game.load.image('ground', 'ground.png');
@@ -29,6 +30,6 @@ var loadState = {
 },
 	create: function(){
 		// go to menu state
-		game.state.start('menu');
+		game.state.start('level3');
 	},
 };
